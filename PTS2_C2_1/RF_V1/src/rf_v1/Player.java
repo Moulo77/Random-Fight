@@ -50,6 +50,10 @@ public class Player {
         skin.setX(posX);
     }
     
+    public ImageView getSkin(){
+        return skin;
+    }
+    
     public void calculatePosition(){
         posX += speed;
         if(posX >= 880){
