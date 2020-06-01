@@ -38,6 +38,7 @@ import javafx.stage.Stage;
  */
 public class RF_V1 extends Application {
     Timer itsTimer;
+    int vitesse;
     @Override
     public void start(Stage primaryStage) throws FileNotFoundException {
         AnchorPane root = new AnchorPane();
@@ -83,13 +84,20 @@ public class RF_V1 extends Application {
             public void handle(KeyEvent ke){
                 KeyCode keyCode = ke.getCode();
                 switch(keyCode){
-                    case Q: p1.setSpeed(-1);
-                        break;
-                    case D: p1.setSpeed(1);
-                        break;
                     case A: p1.setSkin(iVPlayerPunch);
                             iVPlayer.setVisible(false);
                             iVPlayerPunch.setVisible(true);
+                            p1.setSpeed(0);
+                        break;
+                    case LEFT: if(p1.getSkin()!=iVPlayerPunch){
+                            p1.setSpeed(-1);
+                            vitesse=-1;
+                        }
+                        break;
+                    case RIGHT: if(p1.getSkin()!=iVPlayerPunch){
+                            p1.setSpeed(1);
+                            vitesse=1;
+                        }
                         break;
                     default: break;
                 }
@@ -98,12 +106,14 @@ public class RF_V1 extends Application {
         
         scene.setOnKeyReleased(ke -> {
             KeyCode keyCode = ke.getCode();
-            if(keyCode.equals(KeyCode.Q) || keyCode.equals(KeyCode.D)){
-                p1.setSpeed(0);
-            } else if(keyCode.equals(KeyCode.A)){
+            if(keyCode.equals(KeyCode.A)){
                 p1.setSkin(iVPlayer);
                 iVPlayer.setVisible(true);
                 iVPlayerPunch.setVisible(false);
+                p1.setSpeed(vitesse);
+            } else if(keyCode.equals(KeyCode.LEFT) || keyCode.equals(KeyCode.RIGHT)){
+                p1.setSpeed(0);
+                vitesse=0;
             }
         });
         
