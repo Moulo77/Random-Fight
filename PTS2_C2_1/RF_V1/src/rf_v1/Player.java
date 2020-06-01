@@ -25,6 +25,8 @@ public class Player {
         posX = aPosX;
         posY=aPosY;
         skin = aSkin;
+        speed=0;
+        draw();
     }
     
     public double getX(){
@@ -50,11 +52,17 @@ public class Player {
     
     public void calculatePosition(){
         posX += speed;
+        if(posX >= 880){
+            posX=880;
+        } else if(posX<=0){
+            posX=0;
+        }
     }
     
     public void draw(){
         calculatePosition();
         skin.setX(posX);
+        skin.setY(posY);
     }
 }
 
