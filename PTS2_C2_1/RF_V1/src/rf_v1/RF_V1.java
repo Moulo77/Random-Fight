@@ -18,21 +18,28 @@ import static javafx.application.Application.launch;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Stop;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
@@ -127,11 +134,18 @@ public class RF_V1 extends Application {
                         score.addPoints(target.getPoints());
                         root.getChildren().remove(iVTarget);
                     }
+                    if(p1.getX() >= (iVTarget.getX()-iVTarget.getFitWidth()/2) && target.isAlive() == true){
+                        iVPlayer.setX(iVTarget.getX()- iVTarget.getFitWidth()/2);
+                        iVPlayerPunch.setX(iVTarget.getX()- iVTarget.getFitWidth()/2);
+                    }else if(p1.getX() >= 800 - iVPlayer.getFitWidth()/2){
+                        iVPlayer.setX(800 - iVPlayer.getFitWidth()/2);
+                        iVPlayerPunch.setX(800 - iVPlayer.getFitWidth()/2);
+                    }
                 });
             }
         };
         itsTimer = new Timer();
-        itsTimer.schedule(gameLoop,1000, 2);
+        itsTimer.schedule(gameLoop,1000, 1);
         
         /*
         * Timer du jeu
@@ -206,17 +220,50 @@ public class RF_V1 extends Application {
         */
         AnchorPane menuPane = new AnchorPane();
         
+        Font wallpoet = Font.loadFont(getClass().getClassLoader().getResource("font/Wallpoet-Regular.ttf").toExternalForm(), 30);
+        
+        DropShadow dropShadow = new DropShadow();
+        dropShadow.setRadius(5.0);
+        dropShadow.setOffsetX(3.0);
+        dropShadow.setOffsetY(3.0);
+        dropShadow.setColor(Color.RED);
+        
+        FileInputStream menuBackgroundFile = new FileInputStream("src/RF_V1/images/menuBackground.png");
+        Image menuBackground = new Image(menuBackgroundFile);
+        BackgroundImage menuBackgroundImg = new BackgroundImage(menuBackground,
+                                                            BackgroundRepeat.NO_REPEAT,
+                                                            BackgroundRepeat.NO_REPEAT,
+                                                            BackgroundPosition.CENTER,
+                                                            BackgroundSize.DEFAULT);
+        Background menuBG = new Background(menuBackgroundImg);
+       
+        menuPane.setBackground(menuBG);
+        
         Scene menuScene = new Scene(menuPane, 800, 450);
         
-        Button play = new Button("Play");
-        play.setTextAlignment(TextAlignment.CENTER);
+        Stop[] stops = new Stop[] { new Stop(0, Color.rgb(109, 7, 26)), new Stop(0.5, Color.RED), new Stop(1, Color.rgb(109, 7, 26))};
+        LinearGradient lg1 = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops);
+        BackgroundFill buttonBackground = new BackgroundFill(lg1, CornerRadii.EMPTY, Insets.EMPTY);
+        
+        Text playText = new Text("Play");
+        playText.setEffect(dropShadow);
+        playText.setFill(Color.WHITE);
+        playText.setFont(wallpoet);
+        Button play = new Button();
+        play.setBackground(new Background(buttonBackground));
+        play.setGraphic(playText);
         play.setMinHeight(50);
         play.setMinWidth(100);
         play.setTranslateX(500);
         play.setTranslateY(150);
         
-        Button exit = new Button("Exit");
-        exit.setTextAlignment(TextAlignment.CENTER);
+        Text exitText = new Text("Exit");
+        exitText.setEffect(dropShadow);
+        exitText.setFill(Color.WHITE);
+        exitText.setFont(wallpoet);
+        Button exit = new Button();
+        exit.setBackground(new Background(buttonBackground));
+        exit.setGraphic(exitText);
         exit.setMinHeight(50);
         exit.setMinWidth(100);
         exit.setTranslateX(500);
@@ -235,9 +282,10 @@ public class RF_V1 extends Application {
         iVMenu.setY(200 - (imageMenu.getHeight()/2));
         
         Text name = new Text("Jamy");
-        name.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
-        name.setFill(Color.RED);
-        name.setX(150);
+        name.setFont(wallpoet);
+        name.setEffect(dropShadow);
+        name.setFill(Color.WHITE);
+        name.setX(130);
         name.setY(375);
         
         Text arrows = new Text("<- -> ");
