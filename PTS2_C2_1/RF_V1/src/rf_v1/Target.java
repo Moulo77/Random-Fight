@@ -6,6 +6,7 @@
 package rf_v1;
 
 import javafx.scene.Parent;
+import javafx.scene.image.ImageView;
 
 /**
  *
@@ -16,12 +17,14 @@ public class Target extends Parent{
     private int lifePoints;
     private double posX;
     private double posY;
+    private ImageView skin;
 
-    public Target(int points, int lifePoints, double posX, double posY) {
+    public Target(ImageView skin, int points, int lifePoints, double posX, double posY) {
         this.points = points;
         this.lifePoints = lifePoints;
         this.posX = posX;
         this.posY = posY;
+        this.skin = skin;
     }
 
     public int getPoints() {
@@ -31,9 +34,28 @@ public class Target extends Parent{
     public int getLifePoints() {
         return lifePoints;
     }
+    
+    public void hit(int damage){
+        lifePoints-=damage;
+    }
+    
+    public boolean isAlive(){
+        boolean alive = true;
+        if(lifePoints<=0){
+            alive=false;
+            points =0;
+        }
+        
+        return alive;
+    }
 
     public double getPosX() {
         return posX;
+    }
+    
+    public void draw(){
+        skin.setX(posX);
+        skin.setY(posY);
     }
     
 }
