@@ -41,6 +41,10 @@ public class Player {
         return speed;
     }
     
+    public int getDamage(){
+        return damage;
+    }
+    
     public void setSpeed(int aSpeed){
         speed = aSpeed;
     }
