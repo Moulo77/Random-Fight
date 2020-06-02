@@ -18,6 +18,7 @@ import static javafx.application.Application.launch;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
@@ -29,12 +30,14 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 /**
@@ -46,6 +49,8 @@ public class RF_V1 extends Application {
     int vitesse;
     Timer gameTimer;
     int time =120;
+    
+    boolean played = false;
     
     @Override
     public void start(Stage primaryStage) throws FileNotFoundException {
@@ -117,7 +122,7 @@ public class RF_V1 extends Application {
                 Platform.runLater(() -> {
                     p1.draw();
                     target.draw();
-                    textScore.setText(String.valueOf(score.getScore()));
+                    textScore.setText("Score : " + String.valueOf(score.getScore()));
                     if(target.isAlive() == false){
                         score.addPoints(target.getPoints());
                         root.getChildren().remove(iVTarget);
@@ -132,26 +137,12 @@ public class RF_V1 extends Application {
         * Timer du jeu
         */
         Text timeText = new Text();
-        timeText.setX(background.getWidth()-50);
+        timeText.setX(background.getWidth()-100);
         timeText.setY(25);
         timeText.setFont(Font.font(STYLESHEET_MODENA, FontWeight.THIN, FontPosture.REGULAR, 20));
         timeText.setFill(Color.GREEN);
         
-        TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                Platform.runLater(() ->{
-                    time--;
-                    timeText.setText(String.valueOf(time));
-                    if(time <=0){
-                        stop();
-                        timeText.setText("0");
-                    }
-                });
-            }
-        };
-        gameTimer = new Timer();
-        gameTimer.schedule(timerTask, 1000,1000);
+        
         
         /*
         * Gestion des évenements clavier
@@ -201,7 +192,6 @@ public class RF_V1 extends Application {
             }
         });
         
-        
         root.getChildren().add(iVPlayer);
         root.getChildren().add(iVPlayerPunch);
         root.getChildren().add(iVTarget);
@@ -209,9 +199,104 @@ public class RF_V1 extends Application {
         root.getChildren().add(timeText);
         iVPlayerPunch.setVisible(false);
         scene.setFill(Color.GREEN);
+        
+        
+        /*
+        * Menu principal
+        */
+        AnchorPane menuPane = new AnchorPane();
+        
+        Scene menuScene = new Scene(menuPane, 800, 450);
+        
+        Button play = new Button("Play");
+        play.setTextAlignment(TextAlignment.CENTER);
+        play.setMinHeight(50);
+        play.setMinWidth(100);
+        play.setTranslateX(500);
+        play.setTranslateY(150);
+        
+        Button exit = new Button("Exit");
+        exit.setTextAlignment(TextAlignment.CENTER);
+        exit.setMinHeight(50);
+        exit.setMinWidth(100);
+        exit.setTranslateX(500);
+        exit.setTranslateY(250);
+        
+        FileInputStream titleMenu = new FileInputStream("src/RF_V1/images/Title.png");
+        Image imgTitle = new Image(titleMenu, 600, 100 , false, false);
+        ImageView iVTitle = new ImageView(imgTitle);
+        iVTitle.setX(400 - (imgTitle.getWidth()/2));
+        iVTitle.setY(10);
+        
+        FileInputStream fileMenu = new FileInputStream("src/RF_V1/images/jamyface.png");
+        Image imageMenu = new Image(fileMenu, 300, 300, true, false);
+        ImageView iVMenu = new ImageView(imageMenu);
+        iVMenu.setX(30);
+        iVMenu.setY(200 - (imageMenu.getHeight()/2));
+        
+        Text name = new Text("Jamy");
+        name.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        name.setFill(Color.RED);
+        name.setX(150);
+        name.setY(375);
+        
+        Text arrows = new Text("<- -> ");
+        arrows.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 20));
+        arrows.setX(500);
+        arrows.setY(350);
+        
+        Text A = new Text("A");
+        A.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 20));
+        A.setX(520);
+        A.setY(400);
+        
+        Text move = new Text("move");
+        move.setX(575);
+        move.setY(350);
+        
+        Text punch = new Text ("punch");
+        punch.setX(575);
+        punch.setY(400);
+
+        menuPane.getChildren().add(iVTitle);
+        menuPane.getChildren().add(name);
+        menuPane.getChildren().add(A);
+        menuPane.getChildren().add(move);
+        menuPane.getChildren().add(punch);
+        menuPane.getChildren().add(arrows);
+        menuPane.getChildren().add(iVMenu);
+        menuPane.getChildren().add(play);
+        menuPane.getChildren().add(exit);
+        
+        
+        
+        /*
+        * Gestion des fenetres du jeu
+        */
+        play.setOnAction((ActionEvent event) ->{
+            primaryStage.setScene(scene);
+            TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() ->{
+                    time--;
+                    timeText.setText("Time : " + String.valueOf(time));
+                    if(time <=0){
+                        stop();
+                        timeText.setText("Time : 0");
+                    }
+                });
+            }
+        };
+        gameTimer = new Timer();
+        gameTimer.schedule(timerTask, 1000,1000);
+        });
+        exit.setOnAction((ActionEvent event) ->{
+            primaryStage.close();
+        });
+        
         primaryStage.setTitle("Random Fight V1");
-        //primaryStage.setMaximized(true);
-        primaryStage.setScene(scene);
+        primaryStage.setScene(menuScene);
         primaryStage.show();
     }
     
@@ -224,7 +309,7 @@ public class RF_V1 extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        launch(args);
+            launch(args);
     }
     
 }
