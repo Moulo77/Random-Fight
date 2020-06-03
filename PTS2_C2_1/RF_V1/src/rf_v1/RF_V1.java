@@ -280,6 +280,7 @@ public class RF_V1 extends Application {
         });
         Text finalScore = new Text();
         
+        root.getChildren().add(iVScoreBar);
         root.getChildren().add(iVPlayer);
         root.getChildren().add(iVPlayerL);
         root.getChildren().add(iVPlayerPunchL);
