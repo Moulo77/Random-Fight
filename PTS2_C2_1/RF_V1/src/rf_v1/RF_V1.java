@@ -261,6 +261,7 @@ public class RF_V1 extends Application {
                 vitesse=0;
             }
         });
+        Text finalScore = new Text();
         
         root.getChildren().add(iVPlayer);
         root.getChildren().add(iVPlayerL);
@@ -392,6 +393,12 @@ public class RF_V1 extends Application {
                     if(time <=0){
                         stop();
                         timeText.setText("Time : 0");
+                        finalScore.setText("Votre score : " + score.getScore() + " points!");
+                        finalScore.setFont(wallpoetBigger);
+                        finalScore.setFill(Color.WHITE);
+                        finalScore.setEffect(dropShadow);
+                        finalScore.setX(100);
+                        finalScore.setY(200);
                     }
                 });
             }
