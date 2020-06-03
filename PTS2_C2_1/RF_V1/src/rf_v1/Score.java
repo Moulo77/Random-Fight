@@ -16,6 +16,10 @@ public class Score {
         points = 0;
     }
     
+    public void setScore(int aPoints){
+        points=aPoints;
+    }
+    
     public int getScore(){
         return points;
     }
