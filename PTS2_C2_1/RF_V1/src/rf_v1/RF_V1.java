@@ -87,6 +87,15 @@ public class RF_V1 extends Application {
         // Création de la Scene
         Scene scene = new Scene(root, background.getWidth(), background.getHeight());
         
+        Font wallpoet = Font.loadFont(getClass().getClassLoader().getResource("font/Wallpoet-Regular.ttf").toExternalForm(), 25);
+        Font wallpoetBigger = Font.loadFont(getClass().getClassLoader().getResource("font/Wallpoet-Regular.ttf").toExternalForm(), 40);
+        
+        DropShadow dropShadow = new DropShadow();
+        dropShadow.setRadius(5.0);
+        dropShadow.setOffsetX(3.0);
+        dropShadow.setOffsetY(3.0);
+        dropShadow.setColor(Color.RED);
+        
         /*
         * Création du joueur 
         */
@@ -288,14 +297,6 @@ public class RF_V1 extends Application {
         * Menu principal
         */
         AnchorPane menuPane = new AnchorPane();
-        
-        Font wallpoet = Font.loadFont(getClass().getClassLoader().getResource("font/Wallpoet-Regular.ttf").toExternalForm(), 30);
-        
-        DropShadow dropShadow = new DropShadow();
-        dropShadow.setRadius(5.0);
-        dropShadow.setOffsetX(3.0);
-        dropShadow.setOffsetY(3.0);
-        dropShadow.setColor(Color.RED);
         
         FileInputStream menuBackgroundFile = new FileInputStream("src/RF_V1/images/menuBackground.png");
         Image menuBackground = new Image(menuBackgroundFile);
