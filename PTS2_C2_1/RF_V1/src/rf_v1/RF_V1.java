@@ -130,6 +130,7 @@ public class RF_V1 extends Application {
         /*
         * Mise en place du score
         */
+        
         Score score = new Score();
         Text textScore = new Text();
         textScore.setFont(Font.font(STYLESHEET_MODENA, FontWeight.THIN, FontPosture.REGULAR, 20));
@@ -351,19 +352,27 @@ public class RF_V1 extends Application {
         
         Text arrows = new Text("<- -> ");
         arrows.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 20));
+        arrows.setFill(Color.WHITE);
+        arrows.setEffect(dropShadow);
         arrows.setX(500);
         arrows.setY(350);
         
         Text A = new Text("A");
         A.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 20));
+        A.setFill(Color.WHITE);
+        A.setEffect(dropShadow);
         A.setX(520);
         A.setY(400);
         
         Text move = new Text("move");
+        move.setFill(Color.WHITE);
+        move.setEffect(dropShadow);
         move.setX(575);
         move.setY(350);
         
         Text punch = new Text ("punch");
+        punch.setFill(Color.WHITE);
+        punch.setEffect(dropShadow);
         punch.setX(575);
         punch.setY(400);
 
