@@ -41,6 +41,10 @@ public class Player {
         return speed;
     }
     
+    public void setX(double aX){
+        posX=aX;
+    }
+    
     public int getDamage(){
         return damage;
     }
@@ -60,8 +64,8 @@ public class Player {
     
     public void calculatePosition(){
         posX += speed;
-        if(posX >= 880){
-            posX=880;
+        if(posX >= 730){
+            posX=730;
         } else if(posX<=0){
             posX=0;
         }
