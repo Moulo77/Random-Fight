@@ -26,9 +26,21 @@ public class Target extends Parent{
         this.posY = posY;
         this.skin = skin;
     }
+    
+    public double getX(){
+        return posX;
+    }
+    
+    public void setX(double aX){
+        posX=aX;
+    }
 
     public int getPoints() {
         return points;
+    }
+    
+    public void setLife(int aLife){
+        lifePoints=aLife;
     }
 
     public int getLifePoints() {
@@ -43,7 +55,6 @@ public class Target extends Parent{
         boolean alive = true;
         if(lifePoints<=0){
             alive=false;
-            points =0;
         }
         
         return alive;
