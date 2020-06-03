@@ -42,6 +42,10 @@ public class Target extends Parent{
     public void setLife(int aLife){
         lifePoints=aLife;
     }
+    
+    public void setPoints(int points){
+        this.points=points;
+    }
 
     public int getLifePoints() {
         return lifePoints;
