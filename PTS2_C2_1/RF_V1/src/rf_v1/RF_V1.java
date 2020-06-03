@@ -7,6 +7,7 @@ package rf_v1;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
@@ -56,6 +57,8 @@ public class RF_V1 extends Application {
     int vitesse;
     Timer gameTimer;
     int time =120;
+    Random rand = new Random();
+    double randomX;
     
     boolean played = false;
     
@@ -141,17 +144,25 @@ public class RF_V1 extends Application {
                 Platform.runLater(() -> {
                     p1.draw();
                     target.draw();
-                    textScore.setText("Score : " + String.valueOf(score.getScore()));
-                    if(target.isAlive() == false){
-                        score.addPoints(target.getPoints());
-                        root.getChildren().remove(iVTarget);
+                    if(!target.isAlive()){
+                        do{
+                        randomX = rand.nextInt(740 - 0 + 1) + 0;
+                        target.setX(randomX);
+                        target.setLife(2);
+                        root.getChildren().add(iVTarget);
+                        }while( randomX >= p1.getX()-30 && randomX <=p1.getX()+140);
                     }
-                    if(p1.getX() >= (iVTarget.getX()-iVTarget.getFitWidth()/2) && target.isAlive() == true){
-                        iVPlayer.setX(iVTarget.getX()- iVTarget.getFitWidth()/2);
-                        iVPlayerPunch.setX(iVTarget.getX()- iVTarget.getFitWidth()/2);
-                    }else if(p1.getX() >= 800 - iVPlayer.getFitWidth()/2){
-                        iVPlayer.setX(800 - iVPlayer.getFitWidth()/2);
-                        iVPlayerPunch.setX(800 - iVPlayer.getFitWidth()/2);
+                    textScore.setText("Score : " + String.valueOf(score.getScore()));
+                    if(p1.getX() >= (iVTarget.getX()-iVTarget.getFitWidth()/2)
+                            && p1.getX() <= (iVTarget.getX()+iVTarget.getFitWidth()/2)
+                            && target.isAlive()){
+                        if(p1.getX() >= (iVTarget.getX()-iVTarget.getFitWidth()/2)
+                                && p1.getX() <= iVTarget.getX()){
+                            p1.setX(iVTarget.getX()- iVTarget.getFitWidth()/2);
+                        } else if(p1.getX() <= (iVTarget.getX()+iVTarget.getFitWidth()/2)
+                                    && p1.getX() >= iVTarget.getX()){
+                            p1.setX(iVTarget.getX()+ iVTarget.getFitWidth()/2);
+                        } 
                     }
                 });
             }
@@ -247,8 +258,8 @@ public class RF_V1 extends Application {
         root.getChildren().add(iVPlayerL);
         root.getChildren().add(iVPlayerPunchL);
         root.getChildren().add(iVPlayerPunch);
-        root.getChildren().add(iVTarget);
         root.getChildren().add(textScore);
+        root.getChildren().add(iVTarget);
         root.getChildren().add(timeText);
         iVPlayerL.setVisible(false);
         iVPlayerPunch.setVisible(false);
