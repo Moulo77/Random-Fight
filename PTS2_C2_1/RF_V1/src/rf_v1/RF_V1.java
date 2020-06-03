@@ -130,6 +130,11 @@ public class RF_V1 extends Application {
         /*
         * Mise en place du score
         */
+        FileInputStream scoreBar = new FileInputStream("src/RF_V1/images/LaBarre.png");
+        Image scoreBarImg = new Image(scoreBar);
+        ImageView iVScoreBar = new ImageView(scoreBarImg);
+        iVScoreBar.setX(0);
+        iVScoreBar.setY(-30);
         
         Score score = new Score();
         Text textScore = new Text();
