@@ -138,10 +138,11 @@ public class RF_V1 extends Application {
         
         Score score = new Score();
         Text textScore = new Text();
-        textScore.setFont(Font.font(STYLESHEET_MODENA, FontWeight.THIN, FontPosture.REGULAR, 20));
-        textScore.setFill(Color.RED);
+        textScore.setFont(wallpoet);
+        textScore.setFill(Color.WHITE);
+        textScore.setEffect(dropShadow);
         textScore.setX(25);
-        textScore.setY(25);
+        textScore.setY(27);
         
         /*
         * Boucle du jeu
@@ -187,12 +188,13 @@ public class RF_V1 extends Application {
         /*
         * Timer du jeu
         */
-        Text timeText = new Text();
-        timeText.setX(background.getWidth()-100);
-        timeText.setY(25);
-        timeText.setFont(Font.font(STYLESHEET_MODENA, FontWeight.THIN, FontPosture.REGULAR, 20));
-        timeText.setFill(Color.GREEN);
         
+        Text timeText = new Text();
+        timeText.setX(background.getWidth()-160);
+        timeText.setY(27);
+        timeText.setFont(wallpoet);
+        timeText.setFill(Color.WHITE);
+        timeText.setEffect(dropShadow);
         
         
         /*
