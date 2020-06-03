@@ -86,16 +86,28 @@ public class RF_V1 extends Application {
         * Création du joueur 
         */
         FileInputStream file = new FileInputStream("src/RF_V1/images/jamyCour.png");
-        Image image = new Image(file,150,180,false,false);
+        Image image = new Image(file,140,170,false,false);
         ImageView iVPlayer = new ImageView(image);
         iVPlayer.setPreserveRatio(true);
-        iVPlayer.setFitWidth(150);
+        iVPlayer.setFitWidth(110);
         
         file = new FileInputStream("src/RF_V1/images/jamyCoupPoing.png");
-        image = new Image(file,150,180,false,false);
+        image = new Image(file,140,170,false,false);
         ImageView iVPlayerPunch = new ImageView(image);
         iVPlayerPunch.setPreserveRatio(true);
-        iVPlayerPunch.setFitWidth(150);
+        iVPlayerPunch.setFitWidth(110);
+        
+        file = new FileInputStream("src/RF_V1/images/jamyCoupPoingG.png");
+        image = new Image(file,140,170,false,false);
+        ImageView iVPlayerPunchL = new ImageView(image);
+        iVPlayerPunchL.setPreserveRatio(true);
+        iVPlayerPunchL.setFitWidth(110);
+        
+        file = new FileInputStream("src/RF_V1/images/jamyCourG.png");
+        image = new Image(file,140,170,false,false);
+        ImageView iVPlayerL = new ImageView(image);
+        iVPlayerL.setPreserveRatio(true);
+        iVPlayerL.setFitWidth(110);
         
         Player p1 = new Player(iVPlayer,50, background.getHeight()-200);
         
@@ -166,24 +178,43 @@ public class RF_V1 extends Application {
             public void handle(KeyEvent ke){
                 KeyCode keyCode = ke.getCode();
                 switch(keyCode){
-                    case A: p1.setSkin(iVPlayerPunch);
-                            iVPlayer.setVisible(false);
-                            iVPlayerPunch.setVisible(true);
-                            p1.setSpeed(0);
-                            if(iVPlayer.getX() >= iVTarget.getX()-(iVTarget.getFitWidth()/2)){
+                    case A: if(p1.getSkin()== iVPlayer){
+                                p1.setSkin(iVPlayerPunch);
+                                iVPlayerPunch.setVisible(true);
+                                iVPlayer.setVisible(false);
+                                p1.setSpeed(0);
+                                if(iVPlayer.getX() >= iVTarget.getX()-(iVTarget.getFitWidth())
+                                        && iVPlayer.getX() <= iVTarget.getX()+iVTarget.getFitWidth()){
                                 target.hit(p1.getDamage());
+                                }
+                            } else if(p1.getSkin()== iVPlayerL){
+                                p1.setSkin(iVPlayerPunchL);
+                                iVPlayerPunchL.setVisible(true);
+                                iVPlayerL.setVisible(false);
+                                p1.setSpeed(0);
+                                if(iVPlayerL.getX() <= iVTarget.getX()+(iVTarget.getFitWidth())
+                                        && iVPlayerL.getX() >= iVTarget.getX()-iVTarget.getFitWidth()){
+                                    target.hit(p1.getDamage());
+                                }
                             }
+                            
                             if(target.getLifePoints() <= 0){
                                 score.addPoints(target.getPoints());
                                 root.getChildren().remove(iVTarget);
                             }
                         break;
-                    case LEFT: if(p1.getSkin()!=iVPlayerPunch){
+                    case LEFT: if(p1.getSkin()!=iVPlayerPunch && p1.getSkin()!= iVPlayerPunchL){
+                            p1.setSkin(iVPlayerL);
+                            iVPlayerL.setVisible(true);
+                            iVPlayer.setVisible(false);
                             p1.setSpeed(-1);
                             vitesse=-1;
                         }
                         break;
-                    case RIGHT: if(p1.getSkin()!=iVPlayerPunch){
+                    case RIGHT: if(p1.getSkin()!=iVPlayerPunch && p1.getSkin()!= iVPlayerPunchL){
+                        p1.setSkin(iVPlayer);
+                        iVPlayer.setVisible(true);
+                        iVPlayerL.setVisible(false);
                             p1.setSpeed(1);
                             vitesse=1;
                         }
@@ -196,9 +227,15 @@ public class RF_V1 extends Application {
         scene.setOnKeyReleased(ke -> {
             KeyCode keyCode = ke.getCode();
             if(keyCode.equals(KeyCode.A)){
-                p1.setSkin(iVPlayer);
-                iVPlayer.setVisible(true);
-                iVPlayerPunch.setVisible(false);
+                if(p1.getSkin()==iVPlayerPunch){
+                    p1.setSkin(iVPlayer);
+                    iVPlayer.setVisible(true);
+                    iVPlayerPunch.setVisible(false);
+                } else if(p1.getSkin()==iVPlayerPunchL){
+                    p1.setSkin(iVPlayerL);
+                    iVPlayerL.setVisible(true);
+                    iVPlayerPunchL.setVisible(false);
+                }
                 p1.setSpeed(vitesse);
             } else if(keyCode.equals(KeyCode.LEFT) || keyCode.equals(KeyCode.RIGHT)){
                 p1.setSpeed(0);
@@ -207,11 +244,15 @@ public class RF_V1 extends Application {
         });
         
         root.getChildren().add(iVPlayer);
+        root.getChildren().add(iVPlayerL);
+        root.getChildren().add(iVPlayerPunchL);
         root.getChildren().add(iVPlayerPunch);
         root.getChildren().add(iVTarget);
         root.getChildren().add(textScore);
         root.getChildren().add(timeText);
+        iVPlayerL.setVisible(false);
         iVPlayerPunch.setVisible(false);
+        iVPlayerPunchL.setVisible(false);
         scene.setFill(Color.GREEN);
         
         
@@ -351,6 +392,7 @@ public class RF_V1 extends Application {
     @Override
     public void stop(){
         itsTimer.cancel();
+        gameTimer.cancel();
     }
 
     /**
