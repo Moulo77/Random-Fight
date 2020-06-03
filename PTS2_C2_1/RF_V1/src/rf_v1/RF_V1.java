@@ -59,6 +59,8 @@ public class RF_V1 extends Application {
     int time =120;
     Random rand = new Random();
     double randomX;
+    Random randTargetLife = new Random();
+    int targetLife;
     
     boolean played = false;
     
@@ -148,7 +150,13 @@ public class RF_V1 extends Application {
                         do{
                         randomX = rand.nextInt(740 - 0 + 1) + 0;
                         target.setX(randomX);
-                        target.setLife(2);
+                        targetLife = randTargetLife.nextInt((6-1)+1);
+                        for(int i=1;i<7;i++){
+                            if(i==targetLife){
+                                target.setPoints(i*50);
+                            }
+                        }   
+                        target.setLife(targetLife);
                         root.getChildren().add(iVTarget);
                         }while( randomX >= p1.getX()-30 && randomX <=p1.getX()+140);
                     }
