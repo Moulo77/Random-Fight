@@ -278,13 +278,13 @@ public class RF_V1 extends Application {
                 vitesse=0;
             }
         });
-        Text finalScore = new Text();
         
-        root.getChildren().add(iVScoreBar);
+        
         root.getChildren().add(iVPlayer);
         root.getChildren().add(iVPlayerL);
         root.getChildren().add(iVPlayerPunchL);
         root.getChildren().add(iVPlayerPunch);
+        root.getChildren().add(iVScoreBar);
         root.getChildren().add(textScore);
         root.getChildren().add(iVTarget);
         root.getChildren().add(timeText);
@@ -397,6 +397,48 @@ public class RF_V1 extends Application {
         
         
         
+        Text replayText = new Text("replay");
+        replayText.setEffect(dropShadow);
+        replayText.setFill(Color.WHITE);
+        replayText.setFont(wallpoet);
+        
+        Button replay = new Button();
+        replay.setBackground(new Background(buttonBackground));
+        replay.setGraphic(replayText);
+        replay.setMinHeight(50);
+        replay.setMinWidth(120);
+        replay.setTranslateX(350);
+        replay.setTranslateY(150);
+        
+        Text menuText = new Text("Menu");
+        menuText.setEffect(dropShadow);
+        menuText.setFill(Color.WHITE);
+        menuText.setFont(wallpoet);
+        
+        Button menu = new Button();
+        menu.setBackground(new Background(buttonBackground));
+        menu.setGraphic(menuText);
+        menu.setMinHeight(50);
+        menu.setMinWidth(120);
+        menu.setTranslateX(350);
+        menu.setTranslateY(250);
+        
+        Text finalScore = new Text();
+        finalScore.setFont(wallpoetBigger);
+        finalScore.setFill(Color.WHITE);
+        finalScore.setEffect(dropShadow);
+        finalScore.setX(170);
+        finalScore.setY(100);
+        
+        root.getChildren().add(replay);
+        root.getChildren().add(menu);
+        root.getChildren().add(finalScore);
+        replay.setVisible(false);
+        menu.setVisible(false);
+        finalScore.setVisible(false);
+        
+        
+        
         /*
         * Gestion des fenetres du jeu
         */
@@ -409,14 +451,19 @@ public class RF_V1 extends Application {
                     time--;
                     timeText.setText("Time : " + String.valueOf(time));
                     if(time <=0){
-                        stop();
+                        gameTimer.cancel();
+                        time=120;
                         timeText.setText("Time : 0");
-                        finalScore.setText("Votre score : " + score.getScore() + " points!");
-                        finalScore.setFont(wallpoetBigger);
-                        finalScore.setFill(Color.WHITE);
-                        finalScore.setEffect(dropShadow);
-                        finalScore.setX(100);
-                        finalScore.setY(200);
+                        finalScore.setText("score : " + score.getScore() + " points");
+                        replay.setVisible(true);
+                        menu.setVisible(true);
+                        finalScore.setVisible(true);
+                        p1.getSkin().setVisible(false);
+                        root.getChildren().remove(iVPlayer);
+                        root.getChildren().remove(iVPlayerL);
+                        root.getChildren().remove(iVPlayerPunchL);
+                        root.getChildren().remove(iVPlayerPunch);
+                        iVTarget.setVisible(false);
                     }
                 });
             }
@@ -424,8 +471,64 @@ public class RF_V1 extends Application {
         gameTimer = new Timer();
         gameTimer.schedule(timerTask, 1000,1000);
         });
+        
+        
         exit.setOnAction((ActionEvent event) ->{
             primaryStage.close();
+        });
+        
+        replay.setOnAction((ActionEvent event) ->{
+            root.getChildren().add(iVPlayer);
+            root.getChildren().add(iVPlayerL);
+            root.getChildren().add(iVPlayerPunchL);
+            root.getChildren().add(iVPlayerPunch);
+            replay.setVisible(false);
+            menu.setVisible(false);
+            finalScore.setVisible(false);
+            p1.getSkin().setVisible(true);
+            iVTarget.setVisible(true);
+            score.setScore(0);
+            TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() ->{
+                    time--;
+                    timeText.setText("Time : " + String.valueOf(time));
+                    if(time <=0){
+                        gameTimer.cancel();
+                        time=120;
+                        timeText.setText("Time : 0");
+                        finalScore.setText("score : " + score.getScore() + " points");
+                        replay.setVisible(true);
+                        menu.setVisible(true);
+                        finalScore.setVisible(true);
+                        root.getChildren().remove(iVPlayer);
+                        root.getChildren().remove(iVPlayerL);
+                        root.getChildren().remove(iVPlayerPunchL);
+                        root.getChildren().remove(iVPlayerPunch);
+                        iVTarget.setVisible(false);
+                    }
+                });
+            }
+        };
+        gameTimer = new Timer();
+        gameTimer.schedule(timerTask, 1000,1000);
+        });
+        
+        menu.setOnAction((ActionEvent event) ->{
+            primaryStage.setScene(menuScene);
+            replay.setVisible(false);
+            menu.setVisible(false);
+            finalScore.setVisible(false);
+            root.getChildren().add(iVPlayer);
+            root.getChildren().add(iVPlayerL);
+            root.getChildren().add(iVPlayerPunchL);
+            root.getChildren().add(iVPlayerPunch);
+            replay.setVisible(false);
+            menu.setVisible(false);
+            p1.getSkin().setVisible(true);
+            iVTarget.setVisible(true);
+            score.setScore(0);
         });
         
         primaryStage.setTitle("Random Fight V1");
