@@ -157,8 +157,8 @@ public class RF_V1 extends Application {
                         do{
                         randomX = rand.nextInt(740 - 0 + 1) + 0;
                         target.setX(randomX);
-                        targetLife = randTargetLife.nextInt((6-1)+1);
-                        for(int i=1;i<7;i++){
+                        targetLife = randTargetLife.nextInt((4-1)+1);
+                        for(int i=1;i<4;i++){
                             if(i==targetLife){
                                 target.setPoints(i*50);
                             }
