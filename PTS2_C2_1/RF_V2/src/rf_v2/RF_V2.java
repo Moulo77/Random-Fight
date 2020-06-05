@@ -65,6 +65,7 @@ public class RF_V2 extends Application {
     double randomX;
     Random randTargetLife = new Random();
     int targetLife;
+    DropShadow dropShadow; 
     
     boolean played = false;
     
@@ -273,10 +274,9 @@ public class RF_V2 extends Application {
         iVTitle.setX(400 - (imgTitle.getWidth()/2));
         iVTitle.setY(10);
         
-        
         Text playText = new Text("Play");
-        playText.setEffect(dropShadow);
         playText.setFill(Color.WHITE);
+        playText.setEffect(dropShadow);
         playText.setFont(wallpoetBigger);
         Button play = new Button();
         play.setBackground(new Background(buttonBackground));
@@ -287,8 +287,8 @@ public class RF_V2 extends Application {
         play.setTranslateY(120);
         
         Text scoreText = new Text("Scores");
-        scoreText.setEffect(dropShadow);
         scoreText.setFill(Color.WHITE);
+        scoreText.setEffect(dropShadow);
         scoreText.setFont(wallpoetBigger);
         Button scoreButton = new Button();
         scoreButton.setBackground(new Background(buttonBackground));
@@ -299,8 +299,8 @@ public class RF_V2 extends Application {
         scoreButton.setTranslateY(200);
         
         Text settingsText = new Text("Settings");
-        settingsText.setEffect(dropShadow);
         settingsText.setFill(Color.WHITE);
+        settingsText.setEffect(dropShadow);
         settingsText.setFont(wallpoetBigger);
         Button settingsButton = new Button();
         settingsButton.setBackground(new Background(buttonBackground));
@@ -311,8 +311,8 @@ public class RF_V2 extends Application {
         settingsButton.setTranslateY(280);
         
         Text exitText = new Text("Exit");
-        exitText.setEffect(dropShadow);
         exitText.setFill(Color.WHITE);
+        exitText.setEffect(dropShadow);
         exitText.setFont(wallpoetBigger);
         Button exit = new Button();
         exit.setBackground(new Background(buttonBackground));
@@ -446,12 +446,12 @@ public class RF_V2 extends Application {
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 volumePercent.setText(Math.round(newValue.doubleValue()*100) + "%");
             }
-            
         });
         
         Text mainMenu = new Text("Return");
-        mainMenu.setEffect(dropShadow);
+        
         mainMenu.setFill(Color.WHITE);
+        mainMenu.setEffect(dropShadow);
         mainMenu.setFont(wallpoet);
         Button mainMenuButton = new Button();
         mainMenuButton.setBackground(new Background(buttonBackground));
@@ -523,8 +523,8 @@ public class RF_V2 extends Application {
         * Fin de partie
         */
         Text replayText = new Text("replay");
-        replayText.setEffect(dropShadow);
         replayText.setFill(Color.WHITE);
+        replayText.setEffect(dropShadow);
         replayText.setFont(wallpoet);
         
         Button replay = new Button();
@@ -536,8 +536,8 @@ public class RF_V2 extends Application {
         replay.setTranslateY(150);
         
         Text menuText = new Text("Menu");
-        menuText.setEffect(dropShadow);
         menuText.setFill(Color.WHITE);
+        menuText.setEffect(dropShadow);
         menuText.setFont(wallpoet);
         
         Button menu = new Button();
@@ -569,8 +569,8 @@ public class RF_V2 extends Application {
         pausePane.setBackground(menuBG);
         
         Text continueText = new Text("Resume");
-        continueText.setEffect(dropShadow);
         continueText.setFill(Color.WHITE);
+        continueText.setEffect(dropShadow);
         continueText.setFont(wallpoetBigger);
         Button resume = new Button();
         resume.setBackground(new Background(buttonBackground));
@@ -581,8 +581,8 @@ public class RF_V2 extends Application {
         resume.setTranslateY(100);
         
         Text pauseSettings = new Text("Settings");
-        pauseSettings.setEffect(dropShadow);
         pauseSettings.setFill(Color.WHITE);
+        pauseSettings.setEffect(dropShadow);
         pauseSettings.setFont(wallpoetBigger);
         Button pauseSettingsButton = new Button();
         pauseSettingsButton.setBackground(new Background(buttonBackground));
@@ -593,8 +593,8 @@ public class RF_V2 extends Application {
         pauseSettingsButton.setTranslateY(200);
         
         Text mainMenuText = new Text("Menu");
-        mainMenuText.setEffect(dropShadow);
         mainMenuText.setFill(Color.WHITE);
+        mainMenuText.setEffect(dropShadow);
         mainMenuText.setFont(wallpoetBigger);
         Button returnMenuButton = new Button();
         returnMenuButton.setBackground(new Background(buttonBackground));
@@ -610,6 +610,169 @@ public class RF_V2 extends Application {
         
         Scene pause = new Scene(pausePane, 800, 450);
         
+        AnchorPane pauseSettingsPane = new AnchorPane();
+        pauseSettingsPane.setBackground(menuBG);
+        
+        Text leftArrow2 = new Text("←");
+        leftArrow2.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        leftArrow2.setFill(Color.WHITE);
+        leftArrow2.setEffect(dropShadow);
+        leftArrow2.setX(150);
+        leftArrow2.setY(90);
+        
+        Text moveLeft2 = new Text("move left");
+        moveLeft2.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        moveLeft2.setFill(Color.WHITE);
+        moveLeft2.setEffect(dropShadow);
+        moveLeft2.setX(200);
+        moveLeft2.setY(90);
+        
+        Text rightArrow2 = new Text("→");
+        rightArrow2.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        rightArrow2.setFill(Color.WHITE);
+        rightArrow2.setEffect(dropShadow);
+        rightArrow2.setX(150);
+        rightArrow2.setY(150);
+        
+        Text moveRight2 = new Text("move left");
+        moveRight2.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        moveRight2.setFill(Color.WHITE);
+        moveRight2.setEffect(dropShadow);
+        moveRight2.setX(200);
+        moveRight2.setY(150);
+        
+        Text upArrow2 = new Text("↑");
+        upArrow2.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        upArrow2.setFill(Color.WHITE);
+        upArrow2.setEffect(dropShadow);
+        upArrow2.setX(150);
+        upArrow2.setY(210);
+        
+        Text jump2 = new Text("jump");
+        jump2.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        jump2.setFill(Color.WHITE);
+        jump2.setEffect(dropShadow);
+        jump2.setX(200);
+        jump2.setY(210);
+        
+        Text downArrow2 = new Text("↓");
+        downArrow2.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        downArrow2.setFill(Color.WHITE);
+        downArrow2.setEffect(dropShadow);
+        downArrow2.setX(150);
+        downArrow2.setY(270);
+        
+        Text crouch2 = new Text("crouch");
+        crouch2.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        crouch2.setFill(Color.WHITE);
+        crouch2.setEffect(dropShadow);
+        crouch2.setX(200);
+        crouch2.setY(270);
+        
+        Text A2 = new Text("A");
+        A2.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        A2.setFill(Color.WHITE);
+        A2.setEffect(dropShadow);
+        A2.setX(150);
+        A2.setY(330);
+        
+        Text punch2 = new Text ("punch");
+        punch2.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        punch2.setFill(Color.WHITE);
+        punch2.setEffect(dropShadow);
+        punch2.setX(200);
+        punch2.setY(330);
+
+        Text Z2 = new Text("Z");
+        Z2.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        Z2.setFill(Color.WHITE);
+        Z2.setEffect(dropShadow);
+        Z2.setX(150);
+        Z2.setY(390);
+        
+        Text kick2 = new Text ("kick");
+        kick2.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        kick2.setFill(Color.WHITE);
+        kick2.setEffect(dropShadow);
+        kick2.setX(200);
+        kick2.setY(390);
+        
+        Text volumeText2 = new Text("Volume");
+        volumeText.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        volumeText.setFill(Color.WHITE);
+        volumeText.setEffect(dropShadow);
+        volumeText2.setX(565);
+        volumeText2.setY(175);
+        
+        Slider volumeSlider2 = new Slider(0, 1, 0);
+        volumeSlider2.setEffect(dropShadow);
+        volumeSlider2.setTranslateX(550);
+        volumeSlider2.setTranslateY(200);
+        volumeSlider2.setValue(0.5);
+        
+        menuMusic.volumeProperty().bindBidirectional(volumeSlider2.valueProperty());
+        gameMusic.volumeProperty().bindBidirectional(volumeSlider2.valueProperty());
+        punchSound.volumeProperty().bindBidirectional(volumeSlider2.valueProperty());
+        kickSound.volumeProperty().bindBidirectional(volumeSlider2.valueProperty());
+        
+        Text volumePercent2 = new Text("50%");
+        volumePercent2.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 25));
+        volumePercent2.setFill(Color.WHITE);
+        volumePercent2.setEffect(dropShadow);
+        volumePercent2.setX(600);
+        volumePercent2.setY(250);
+        
+        Scene settingsPause = new Scene(pauseSettingsPane, 800, 450);
+        
+        volumeSlider2.valueProperty().addListener(new ChangeListener<Number>(){
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                volumePercent2.setText(Math.round(newValue.doubleValue()*100) + "%");
+            }
+        });
+        
+        Text mainMenu2 = new Text("Return");
+        mainMenu2.setEffect(dropShadow);
+        mainMenu2.setFill(Color.WHITE);
+        mainMenu2.setFont(wallpoet);
+        Button mainMenuButton2 = new Button();
+        mainMenuButton2.setBackground(new Background(buttonBackground));
+        mainMenuButton2.setGraphic(mainMenu2);
+        mainMenuButton2.setMinHeight(50);
+        mainMenuButton2.setMinWidth(100);
+        mainMenuButton2.setTranslateX(10);
+        mainMenuButton2.setTranslateY(10);
+        
+        mainMenuButton2.setOnAction((ActionEvent event) -> {
+            primaryStage.setScene(menuScene);
+        });
+                
+        pauseSettingsPane.getChildren().add(mainMenuButton2);
+        pauseSettingsPane.getChildren().add(volumePercent2);
+        pauseSettingsPane.getChildren().add(volumeText2);
+        pauseSettingsPane.getChildren().add(volumeSlider2);
+        pauseSettingsPane.getChildren().add(leftArrow2);
+        pauseSettingsPane.getChildren().add(moveLeft2);
+        pauseSettingsPane.getChildren().add(rightArrow2);
+        pauseSettingsPane.getChildren().add(moveRight2);
+        pauseSettingsPane.getChildren().add(upArrow2);
+        pauseSettingsPane.getChildren().add(jump2);
+        pauseSettingsPane.getChildren().add(downArrow2);
+        pauseSettingsPane.getChildren().add(crouch2);
+        pauseSettingsPane.getChildren().add(A2);
+        pauseSettingsPane.getChildren().add(punch2);
+        pauseSettingsPane.getChildren().add(Z2);
+        pauseSettingsPane.getChildren().add(kick2);
+        
+        
+        
+        pauseSettingsButton.setOnAction((ActionEvent event) -> {
+            primaryStage.setScene(settingsPause);
+        });
+        
+        mainMenuButton2.setOnAction((ActionEvent event) -> {
+            primaryStage.setScene(pause);
+        });
         
         resume.setOnAction((ActionEvent event) ->{
             primaryStage.setScene(scene);
