@@ -193,6 +193,18 @@ public class RF_V2 extends Application {
         iVTarget.setPreserveRatio(true);
         iVTarget.setFitWidth(90);
         
+        FileInputStream targetFile2 = new FileInputStream("src/RF_V2/images/ennemiLVL2.PNG");
+        Image targetImg2 = new Image(targetFile2, 150, 180, false, false);
+        ImageView iVTarget2 = new ImageView(targetImg2);
+        iVTarget2.setPreserveRatio(true);
+        iVTarget2.setFitWidth(90);
+        
+        FileInputStream targetFile3 = new FileInputStream("src/RF_V2/images/ennemiLVL3.PNG");
+        Image targetImg3 = new Image(targetFile3, 150, 180, false, false);
+        ImageView iVTarget3 = new ImageView(targetImg3);
+        iVTarget3.setPreserveRatio(true);
+        iVTarget3.setFitWidth(90);
+        
         Target target = new Target(iVTarget, 50, 2, background.getWidth()-250, background.getHeight()-180);
         
         /*
@@ -226,6 +238,18 @@ public class RF_V2 extends Application {
                         randomX = rand.nextInt(740 - 0 + 1) + 0;
                         target.setX(randomX);
                         targetLife = randTargetLife.nextInt((4-1)+1);
+                        switch(targetLife){
+                            case 1: iVTarget.setVisible(true);
+                                    iVTarget2.setVisible(false);
+                                    iVTarget3.setVisible(false);break;
+                            case 2: iVTarget.setVisible(false);
+                                    iVTarget2.setVisible(true);
+                                    iVTarget3.setVisible(false);break;
+                            case 3: iVTarget.setVisible(false);
+                                    iVTarget2.setVisible(false);
+                                    iVTarget3.setVisible(true);break;
+                            default:break;
+                       }
                         for(int i=1;i<4;i++){
                             if(i==targetLife){
                                 target.setPoints(i*50);
@@ -512,6 +536,10 @@ public class RF_V2 extends Application {
         root.getChildren().add(textScore);
         root.getChildren().add(iVTarget);
         root.getChildren().add(timeText);
+        root.getChildren().add(iVTarget2);
+        root.getChildren().add(iVTarget3);
+        iVTarget2.setVisible(false);
+        iVTarget3.setVisible(false);
         iVPlayerKick.setVisible(false);
         iVPlayerKickL.setVisible(false);
         iVPlayerL.setVisible(false);
