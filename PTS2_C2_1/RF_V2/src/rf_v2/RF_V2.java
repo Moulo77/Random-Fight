@@ -1095,6 +1095,58 @@ public class RF_V2 extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        // connection to SQLite data base named Scores
+        try 
+        {
+            Class.forName("org.sqlite.JDBC");
+        }
+        catch(Exception e )
+        {
+            System.out.println("Exception found ! " + e);  
+        }
+        
+        Connection con = null;
+        
+        try
+        {
+            con = DriverManager.getConnection("jdbc:sqlite:Scores.db");
+        }
+        catch (SQLException s)
+        {
+            System.out.println("Exception 2 : "+ s);
+        }
+        
+        String sql = "SELECT * FROM Scores ORDER by points DESC";
+        
+        PreparedStatement p = null;
+        ResultSet r = null;
+        
+        try
+        {
+            p = con.prepareStatement( sql );
+            p.clearParameters();
+            
+            r = p.executeQuery();
+            
+            int points;
+            String pseudo;
+            
+            while (r.next())
+            {
+                points = r.getInt(1);
+                pseudo = r.getString("pseudo");
+                
+                System.out.println (pseudo + " | " + points + " points");
+            }
+            r.close();
+            p.close();
+            con.close();
+        }
+        catch ( SQLException s)
+        {
+            System.out.println("Exception 3 : "+ s);
+        }
+        // end of connection code
             launch(args);
     }
     
