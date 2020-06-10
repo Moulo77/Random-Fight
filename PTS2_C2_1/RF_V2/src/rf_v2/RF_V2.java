@@ -239,15 +239,24 @@ public class RF_V2 extends Application {
                         target.setX(randomX);
                         targetLife = randTargetLife.nextInt((4-1)+1);
                         switch(targetLife){
-                            case 1: iVTarget.setVisible(true);
+                            case 1: 
+                                    target.setSkin(iVTarget);
+                                    iVTarget.setVisible(true);
                                     iVTarget2.setVisible(false);
-                                    iVTarget3.setVisible(false);break;
-                            case 2: iVTarget.setVisible(false);
+                                    iVTarget3.setVisible(false);
+                                    break;
+                            case 2: 
+                                    target.setSkin(iVTarget2);
+                                    iVTarget.setVisible(false);
                                     iVTarget2.setVisible(true);
-                                    iVTarget3.setVisible(false);break;
-                            case 3: iVTarget.setVisible(false);
+                                    iVTarget3.setVisible(false);
+                                    break;
+                            case 3: 
+                                    target.setSkin(iVTarget3);
+                                    iVTarget.setVisible(false);
                                     iVTarget2.setVisible(false);
-                                    iVTarget3.setVisible(true);break;
+                                    iVTarget3.setVisible(true);
+                                    break;
                             default:break;
                        }
                         for(int i=1;i<4;i++){
@@ -265,15 +274,15 @@ public class RF_V2 extends Application {
                         }while( randomX >= p1.getX()-30 && randomX <=p1.getX()+140);
                     }
                     textScore.setText("Score : " + String.valueOf(score.getScore()));
-                    if(p1.getX() >= (iVTarget.getX()-iVTarget.getFitWidth()/2)
-                            && p1.getX() <= (iVTarget.getX()+iVTarget.getFitWidth()/2)
+                    if(p1.getX() >= (target.getSkin().getX()-target.getSkin().getFitWidth()/2)
+                            && p1.getX() <= (target.getSkin().getX()+target.getSkin().getFitWidth()/2)
                             && target.isAlive()){
-                        if(p1.getX() >= (iVTarget.getX()-iVTarget.getFitWidth()/2)
-                                && p1.getX() <= iVTarget.getX()){
-                            p1.setX(iVTarget.getX()- iVTarget.getFitWidth()/2);
-                        } else if(p1.getX() <= (iVTarget.getX()+iVTarget.getFitWidth()/2)
-                                    && p1.getX() >= iVTarget.getX()){
-                            p1.setX(iVTarget.getX()+ iVTarget.getFitWidth()/2);
+                        if(p1.getX() >= (target.getSkin().getX()-target.getSkin().getFitWidth()/2)
+                                && p1.getX() <= target.getSkin().getX()){
+                            p1.setX(target.getSkin().getX()- target.getSkin().getFitWidth()/2);
+                        } else if(p1.getX() <= (target.getSkin().getX()+target.getSkin().getFitWidth()/2)
+                                    && p1.getX() >= target.getSkin().getX()){
+                            p1.setX(target.getSkin().getX()+ target.getSkin().getFitWidth()/2);
                         } 
                     }
                 });
@@ -855,8 +864,8 @@ public class RF_V2 extends Application {
                                 iVPlayerPunch.setVisible(true);
                                 iVPlayer.setVisible(false);
                                 p1.setSpeed(0);
-                                if(iVPlayer.getX() >= iVTarget.getX()-(iVTarget.getFitWidth())
-                                        && iVPlayer.getX() <= iVTarget.getX()+iVTarget.getFitWidth()){
+                                if(iVPlayer.getX() >= target.getSkin().getX()-(target.getSkin().getFitWidth())
+                                        && iVPlayer.getX() <= target.getSkin().getX()+(target.getSkin().getFitWidth())){
                                     punchSound.play();
                                     target.hit(p1.getDamage());
                                 }
@@ -865,8 +874,8 @@ public class RF_V2 extends Application {
                                 iVPlayerPunchL.setVisible(true);
                                 iVPlayerL.setVisible(false);
                                 p1.setSpeed(0);
-                                if(iVPlayerL.getX() <= iVTarget.getX()+(iVTarget.getFitWidth())
-                                        && iVPlayerL.getX() >= iVTarget.getX()-iVTarget.getFitWidth()){
+                                if(iVPlayerL.getX() <= target.getSkin().getX()+(target.getSkin().getFitWidth())
+                                        && iVPlayerL.getX() >= target.getSkin().getX()-(target.getSkin().getFitWidth())){
                                     punchSound.play();
                                     target.hit(p1.getDamage());
                                 }
@@ -882,8 +891,8 @@ public class RF_V2 extends Application {
                                 iVPlayerKick.setVisible(true);
                                 iVPlayer.setVisible(false);
                                 p1.setSpeed(0);
-                                if(iVPlayer.getX() >= iVTarget.getX()-(iVTarget.getFitWidth())
-                                        && iVPlayer.getX() <= iVTarget.getX()+iVTarget.getFitWidth()){
+                                if(iVPlayer.getX() >= target.getSkin().getX()-(target.getSkin().getFitWidth())
+                                        && iVPlayer.getX() <= target.getSkin().getX()+(target.getSkin().getFitWidth())){
                                     kickSound.play();
                                     target.hit(p1.getDamage());
                                 }
@@ -892,8 +901,8 @@ public class RF_V2 extends Application {
                                 iVPlayerKickL.setVisible(true);
                                 iVPlayerL.setVisible(false);
                                 p1.setSpeed(0);
-                                if(iVPlayerL.getX() <= iVTarget.getX()+(iVTarget.getFitWidth())
-                                        && iVPlayerL.getX() >= iVTarget.getX()-iVTarget.getFitWidth()){
+                                if(iVPlayerL.getX() <= target.getSkin().getX()+(target.getSkin().getFitWidth())
+                                        && iVPlayerL.getX() >= target.getSkin().getX()-(target.getSkin().getFitWidth())){
                                     kickSound.play();
                                     target.hit(p1.getDamage());
                                 }
@@ -904,7 +913,7 @@ public class RF_V2 extends Application {
                             }
                             break;
                     case LEFT: if(p1.getSkin()!=iVPlayerPunch && p1.getSkin()!= iVPlayerPunchL
-                                && p1.getSkin() != iVPlayerKick && p1.getSkin() != iVPlayerKickL){
+                                    && p1.getSkin() != iVPlayerKick && p1.getSkin() != iVPlayerKickL ){
                             p1.setSkin(iVPlayerL);
                             iVPlayerL.setVisible(true);
                             iVPlayer.setVisible(false);
@@ -913,7 +922,7 @@ public class RF_V2 extends Application {
                         }
                         break;
                     case RIGHT: if(p1.getSkin()!=iVPlayerPunch && p1.getSkin()!= iVPlayerPunchL
-                                && p1.getSkin() != iVPlayerKick && p1.getSkin() != iVPlayerKickL){
+                            && p1.getSkin() != iVPlayerKick && p1.getSkin() != iVPlayerKickL){
                         p1.setSkin(iVPlayer);
                         iVPlayer.setVisible(true);
                         iVPlayerL.setVisible(false);
@@ -1098,6 +1107,7 @@ public class RF_V2 extends Application {
      */
     public static void main(String[] args) {
         // connection to SQLite data base named Scores
+        /*
         try 
         {
             Class.forName("org.sqlite.JDBC");
@@ -1149,6 +1159,7 @@ public class RF_V2 extends Application {
             System.out.println("Exception 3 : "+ s);
         }
         // end of connection code
+        */
             launch(args);
     }
     
