@@ -903,7 +903,8 @@ public class RF_V2 extends Application {
                                 root.getChildren().remove(iVTarget);
                             }
                             break;
-                    case LEFT: if(p1.getSkin()!=iVPlayerPunch && p1.getSkin()!= iVPlayerPunchL){
+                    case LEFT: if(p1.getSkin()!=iVPlayerPunch && p1.getSkin()!= iVPlayerPunchL
+                                && p1.getSkin() != iVPlayerKick && p1.getSkin() != iVPlayerKickL){
                             p1.setSkin(iVPlayerL);
                             iVPlayerL.setVisible(true);
                             iVPlayer.setVisible(false);
@@ -911,7 +912,8 @@ public class RF_V2 extends Application {
                             vitesse=-1;
                         }
                         break;
-                    case RIGHT: if(p1.getSkin()!=iVPlayerPunch && p1.getSkin()!= iVPlayerPunchL){
+                    case RIGHT: if(p1.getSkin()!=iVPlayerPunch && p1.getSkin()!= iVPlayerPunchL
+                                && p1.getSkin() != iVPlayerKick && p1.getSkin() != iVPlayerKickL){
                         p1.setSkin(iVPlayer);
                         iVPlayer.setVisible(true);
                         iVPlayerL.setVisible(false);
