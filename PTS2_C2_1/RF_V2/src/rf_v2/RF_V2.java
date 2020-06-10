@@ -74,6 +74,29 @@ public class RF_V2 extends Application {
         AnchorPane root = new AnchorPane();
         
         /*
+        * DATABASE
+        */
+        try 
+        {
+            Class.forName("org.sqlite.JDBC");
+        }
+        catch(Exception e )
+        {
+            System.out.println("Exception found ! " + e);  
+        }
+        
+        Connection con = null;
+        
+        try
+        {
+            con = DriverManager.getConnection("jdbc:sqlite:Scores.db");
+        }
+        catch (SQLException s)
+        {
+            System.out.println("Exception 2 : "+ s);
+        }
+        
+        /*
         * Chargement des sons et musiques
         */
         URL menuMusicFile = getClass().getResource("sounds/menuMusic.mp3");
@@ -362,6 +385,115 @@ public class RF_V2 extends Application {
         menuPane.getChildren().add(play);
         menuPane.getChildren().add(exit);
         
+        /*
+        *Fenetre des scores
+        */
+        GridPane scorePane = new GridPane();
+        scorePane.setAlignment(Pos.TOP_CENTER);
+        scorePane.setVgap(25);
+        scorePane.setHgap(25);
+        scorePane.setPadding(new Insets(15,15,15,15));
+        scorePane.setBackground(menuBG);
+       
+        Text pseudoPlayer1 = new Text();
+        pseudoPlayer1.setFont(wallpoet);
+        pseudoPlayer1.setFill(Color.GOLD);
+        scorePane.add(pseudoPlayer1, 0, 1);
+        
+        Text scorePlayer1 = new Text();
+        scorePlayer1.setFont(wallpoet);
+        scorePlayer1.setFill(Color.GOLD);
+        scorePane.add(scorePlayer1, 1, 1);
+        
+        Text pseudoPlayer2 = new Text();
+        pseudoPlayer2.setFont(wallpoet);
+        pseudoPlayer2.setFill(Color.GREY);
+        scorePane.add(pseudoPlayer2, 0, 2);
+        
+        Text scorePlayer2 = new Text();
+        scorePlayer2.setFont(wallpoet);
+        scorePlayer2.setFill(Color.GREY);
+        scorePane.add(scorePlayer2, 1, 2);
+        
+        Text pseudoPlayer3 = new Text();
+        pseudoPlayer3.setFont(wallpoet);
+        pseudoPlayer3.setFill(Color.BROWN);
+        scorePane.add(pseudoPlayer3, 0, 3);
+        
+        Text scorePlayer3 = new Text();
+        scorePlayer3.setFont(wallpoet);
+        scorePlayer3.setFill(Color.BROWN);
+        scorePane.add(scorePlayer3, 1, 3);
+        
+        String sql = "SELECT * FROM Scores ORDER by points DESC";
+        
+        String[] bestsScores = new String[10];
+        String[] bestsScorePseudo = new String[10];
+        
+        PreparedStatement p = null;
+        ResultSet r = null;
+        
+        int i = 0;
+                
+        try
+        {
+            p = con.prepareStatement( sql );
+            p.clearParameters();
+            
+            r = p.executeQuery();
+            
+            int points;
+            String pseudo;
+            
+            while (r.next())
+            {
+                points = r.getInt(1);
+                pseudo = r.getString("pseudo");
+                
+                bestsScores[i] = String.valueOf(points);
+                bestsScorePseudo[i] = pseudo;
+                
+                i++;
+            }
+            r.close();
+            p.close();
+            con.close();
+        }
+        catch ( SQLException s)
+        {
+            System.out.println("Exception 3 : "+ s);
+        }
+        
+        pseudoPlayer1.setText(bestsScorePseudo[0]);
+        pseudoPlayer2.setText(bestsScorePseudo[1]);
+        pseudoPlayer3.setText(bestsScorePseudo[2]);
+        scorePlayer1.setText(bestsScores[0]);
+        scorePlayer2.setText(bestsScores[1]);
+        scorePlayer3.setText(bestsScores[2]);
+        
+        Text pseudoText = new Text("Pseudo");
+        pseudoText.setFont(wallpoet);
+        pseudoText.setFill(Color.WHITE);
+        pseudoText.setEffect(dropShadow);
+        scorePane.add(pseudoText, 0, 0);
+        
+        Text scoreTextTable = new Text("Score");
+        scoreTextTable.setFont(wallpoet);
+        scoreTextTable.setFill(Color.WHITE);
+        scoreTextTable.setEffect(dropShadow);
+        scorePane.add(scoreTextTable, 1, 0);
+        
+        Scene scoreTable = new Scene(scorePane, 800, 450);
+        
+        scoreTable.setOnKeyPressed(new EventHandler<KeyEvent>(){
+            @Override
+            public void handle(KeyEvent event) {
+                if(event.getCode() == KeyCode.ESCAPE){
+                    primaryStage.setScene(menuScene);
+                }
+            }
+            
+        });
         
         /*
         *Fenêtre des paramètres
