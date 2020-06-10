@@ -46,7 +46,16 @@ public class Target extends Parent{
     public void setPoints(int points){
         this.points=points;
     }
-
+    
+    public void setSkin(ImageView aSkin){
+        skin=aSkin;
+        skin.setX(posX);
+    }
+    
+    public ImageView getSkin(){
+        return skin;
+    }
+    
     public int getLifePoints() {
         return lifePoints;
     }
