@@ -362,6 +362,7 @@ public class RF_V2 extends Application {
         menuPane.getChildren().add(play);
         menuPane.getChildren().add(exit);
         
+        
         /*
         *Fenêtre des paramètres
         */
