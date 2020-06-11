@@ -8,22 +8,29 @@ package rf_v2;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.net.URL;
+import java.sql.*;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.image.Image;
 import javafx.application.Application;
 import static javafx.application.Application.STYLESHEET_MODENA;
 import static javafx.application.Application.launch;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -36,6 +43,7 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.GridPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
@@ -69,6 +77,8 @@ public class RF_V2 extends Application {
     
     boolean played = false;
     
+    Connection con = null;
+    
     @Override
     public void start(Stage primaryStage) throws FileNotFoundException {
         AnchorPane root = new AnchorPane();
@@ -84,8 +94,6 @@ public class RF_V2 extends Application {
         {
             System.out.println("Exception found ! " + e);  
         }
-        
-        Connection con = null;
         
         try
         {
@@ -425,10 +433,30 @@ public class RF_V2 extends Application {
         scorePlayer3.setFill(Color.BROWN);
         scorePane.add(scorePlayer3, 1, 3);
         
-        String sql = "SELECT * FROM Scores ORDER by points DESC";
+        Text pseudoPlayer4 = new Text();
+        pseudoPlayer4.setFont(wallpoet);
+        pseudoPlayer4.setFill(Color.WHITE);
+        scorePane.add(pseudoPlayer4, 0, 4);
         
-        String[] bestsScores = new String[10];
-        String[] bestsScorePseudo = new String[10];
+        Text scorePlayer4 = new Text();
+        scorePlayer4.setFont(wallpoet);
+        scorePlayer4.setFill(Color.WHITE);
+        scorePane.add(scorePlayer4, 1, 4);
+        
+        Text pseudoPlayer5 = new Text();
+        pseudoPlayer5.setFont(wallpoet);
+        pseudoPlayer5.setFill(Color.WHITE);
+        scorePane.add(pseudoPlayer5, 0, 5);
+        
+        Text scorePlayer5 = new Text();
+        scorePlayer5.setFont(wallpoet);
+        scorePlayer5.setFill(Color.WHITE);
+        scorePane.add(scorePlayer5, 1, 5);
+        
+        String sql = "SELECT * FROM Scores ORDER by points DESC;";
+        
+        String[] bestsScores = new String[5];
+        String[] bestsScorePseudo = new String[5];
         
         PreparedStatement p = null;
         ResultSet r = null;
@@ -445,7 +473,7 @@ public class RF_V2 extends Application {
             int points;
             String pseudo;
             
-            while (r.next())
+            while (r.next() && i<5)
             {
                 points = r.getInt(1);
                 pseudo = r.getString("pseudo");
@@ -457,7 +485,6 @@ public class RF_V2 extends Application {
             }
             r.close();
             p.close();
-            con.close();
         }
         catch ( SQLException s)
         {
@@ -467,9 +494,14 @@ public class RF_V2 extends Application {
         pseudoPlayer1.setText(bestsScorePseudo[0]);
         pseudoPlayer2.setText(bestsScorePseudo[1]);
         pseudoPlayer3.setText(bestsScorePseudo[2]);
+        pseudoPlayer4.setText(bestsScorePseudo[3]);
+        pseudoPlayer5.setText(bestsScorePseudo[4]);
+        
         scorePlayer1.setText(bestsScores[0]);
         scorePlayer2.setText(bestsScores[1]);
         scorePlayer3.setText(bestsScores[2]);
+        scorePlayer4.setText(bestsScores[3]);
+        scorePlayer5.setText(bestsScores[4]);
         
         Text pseudoText = new Text("Pseudo");
         pseudoText.setFont(wallpoet);
@@ -493,6 +525,10 @@ public class RF_V2 extends Application {
                 }
             }
             
+        });
+        
+        scoreButton.setOnAction((ActionEvent event) ->{
+            primaryStage.setScene(scoreTable);
         });
         
         /*
@@ -614,27 +650,10 @@ public class RF_V2 extends Application {
             }
         });
         
-        Text mainMenu = new Text("Return");
-        
-        mainMenu.setFill(Color.WHITE);
-        mainMenu.setEffect(dropShadow);
-        mainMenu.setFont(wallpoet);
-        Button mainMenuButton = new Button();
-        mainMenuButton.setBackground(new Background(buttonBackground));
-        mainMenuButton.setGraphic(mainMenu);
-        mainMenuButton.setMinHeight(50);
-        mainMenuButton.setMinWidth(100);
-        mainMenuButton.setTranslateX(10);
-        mainMenuButton.setTranslateY(10);
-        
-        mainMenuButton.setOnAction((ActionEvent event) -> {
-            primaryStage.setScene(menuScene);
-        });
         
         AnchorPane settingsPane = new AnchorPane();
         settingsPane.setBackground(menuBG);
         
-        settingsPane.getChildren().add(mainMenuButton);
         settingsPane.getChildren().add(volumePercent);
         settingsPane.getChildren().add(volumeText);
         settingsPane.getChildren().add(volumeSlider);
@@ -652,6 +671,15 @@ public class RF_V2 extends Application {
         settingsPane.getChildren().add(kick);
         
         Scene settingsScene = new Scene(settingsPane, 800, 450);
+        settingsScene.setOnKeyPressed(new EventHandler<KeyEvent>(){
+            @Override
+            public void handle(KeyEvent event) {
+                if(event.getCode().equals(KeyCode.ESCAPE)){
+                    primaryStage.setScene(menuScene);
+                }
+            }
+            
+        });
         
         settingsButton.setOnAction((ActionEvent event) ->{
             primaryStage.setScene(settingsScene);
@@ -692,31 +720,29 @@ public class RF_V2 extends Application {
         /*
         * Fin de partie
         */
-        Text replayText = new Text("replay");
+        Text replayText = new Text("Replay");
         replayText.setFill(Color.WHITE);
         replayText.setEffect(dropShadow);
         replayText.setFont(wallpoet);
-        
         Button replay = new Button();
         replay.setBackground(new Background(buttonBackground));
         replay.setGraphic(replayText);
         replay.setMinHeight(50);
         replay.setMinWidth(120);
         replay.setTranslateX(350);
-        replay.setTranslateY(150);
+        replay.setTranslateY(225);
         
         Text menuText = new Text("Menu");
         menuText.setFill(Color.WHITE);
         menuText.setEffect(dropShadow);
         menuText.setFont(wallpoet);
-        
         Button menu = new Button();
         menu.setBackground(new Background(buttonBackground));
         menu.setGraphic(menuText);
         menu.setMinHeight(50);
         menu.setMinWidth(120);
         menu.setTranslateX(350);
-        menu.setTranslateY(250);
+        menu.setTranslateY(300);
         
         Text finalScore = new Text();
         finalScore.setFont(wallpoetBigger);
@@ -725,12 +751,61 @@ public class RF_V2 extends Application {
         finalScore.setX(170);
         finalScore.setY(100);
         
+        Text yourPseudo = new Text("Your Pseudo : ");
+        yourPseudo.setFont(wallpoet);
+        yourPseudo.setFill(Color.WHITE);
+        yourPseudo.setEffect(dropShadow);
+        yourPseudo.setX(60);
+        yourPseudo.setY(170);
+        
+        TextField pseudoEntry = new TextField();
+        pseudoEntry.setTranslateX(300);
+        pseudoEntry.setTranslateY(150);
+        
+        Text validate = new Text("Validate");
+        validate.setFill(Color.WHITE);
+        validate.setEffect(dropShadow);
+        validate.setFont(wallpoet);
+        Button validateButton = new Button();
+        validateButton.setBackground(new Background(buttonBackground));
+        validateButton.setGraphic(validate);
+        validateButton.setMinHeight(30);
+        validateButton.setMinWidth(80);
+        validateButton.setTranslateX(500);
+        validateButton.setTranslateY(150);
+        
+        root.getChildren().add(yourPseudo);
+        root.getChildren().add(validateButton);
+        root.getChildren().add(pseudoEntry);
         root.getChildren().add(replay);
         root.getChildren().add(menu);
         root.getChildren().add(finalScore);
         replay.setVisible(false);
         menu.setVisible(false);
         finalScore.setVisible(false);
+        yourPseudo.setVisible(false);
+        validateButton.setVisible(false);
+        pseudoEntry.setVisible(false);
+        
+        StringProperty endGamePseudo = new SimpleStringProperty();
+        
+        validateButton.setOnAction((ActionEvent event) -> {
+            try {
+                PreparedStatement prep = con.prepareStatement("INSERT INTO Scores VALUES(?,?);");
+                if(score.getScore()!=0){
+                    prep.setInt(1, score.getScore());
+                }else{
+                    prep.setNull(1, score.getScore());
+                }
+                
+                prep.setString(2, pseudoEntry.getText());
+                prep.execute();
+                prep.close();
+            } catch (SQLException ex) {
+                System.err.println("Exception 4 : "+ ex);
+            }
+            validateButton.setDisable(true);
+        });
         
         /*
         *Fenêtre pause
@@ -966,6 +1041,9 @@ public class RF_V2 extends Application {
                         replay.setVisible(true);
                         menu.setVisible(true);
                         finalScore.setVisible(true);
+                        yourPseudo.setVisible(true);
+                        validateButton.setVisible(true);
+                        pseudoEntry.setVisible(true);
                         p1.getSkin().setVisible(false);
                         root.getChildren().remove(iVPlayer);
                         root.getChildren().remove(iVPlayerL);
@@ -1116,6 +1194,7 @@ public class RF_V2 extends Application {
         * Gestion des fenetres du jeu
         */
         play.setOnAction((ActionEvent event) ->{
+            validateButton.setDisable(false);
             primaryStage.setScene(scene);
             menuMusic.stop();
             gameMusic.play();
@@ -1138,6 +1217,9 @@ public class RF_V2 extends Application {
                         replay.setVisible(true);
                         menu.setVisible(true);
                         finalScore.setVisible(true);
+                        yourPseudo.setVisible(true);
+                        validateButton.setVisible(true);
+                        pseudoEntry.setVisible(true);
                         p1.getSkin().setVisible(false);
                         root.getChildren().remove(iVPlayer);
                         root.getChildren().remove(iVPlayerL);
@@ -1158,6 +1240,7 @@ public class RF_V2 extends Application {
         });
         
         replay.setOnAction((ActionEvent event) ->{
+            validateButton.setDisable(false);
             menuMusic.stop();
             gameMusic.play();
             time = 120;
@@ -1168,6 +1251,9 @@ public class RF_V2 extends Application {
             replay.setVisible(false);
             menu.setVisible(false);
             finalScore.setVisible(false);
+            yourPseudo.setVisible(false);
+            validateButton.setVisible(false);
+            pseudoEntry.setVisible(false);
             p1.getSkin().setVisible(true);
             iVTarget.setVisible(true);
             score.setScore(0);
@@ -1189,6 +1275,9 @@ public class RF_V2 extends Application {
                         replay.setVisible(true);
                         menu.setVisible(true);
                         finalScore.setVisible(true);
+                        yourPseudo.setVisible(true);
+                        validateButton.setVisible(true);
+                        pseudoEntry.setVisible(true);
                         root.getChildren().remove(iVPlayer);
                         root.getChildren().remove(iVPlayerL);
                         root.getChildren().remove(iVPlayerPunchL);
@@ -1203,11 +1292,15 @@ public class RF_V2 extends Application {
         });
         
         menu.setOnAction((ActionEvent event) ->{
+            validateButton.setDisable(false);
             gameMusic.stop();
             primaryStage.setScene(menuScene);
             replay.setVisible(false);
             menu.setVisible(false);
             finalScore.setVisible(false);
+            yourPseudo.setVisible(false);
+            validateButton.setVisible(false);
+            pseudoEntry.setVisible(false);
             root.getChildren().add(iVPlayer);
             root.getChildren().add(iVPlayerL);
             root.getChildren().add(iVPlayerPunchL);
@@ -1226,13 +1319,14 @@ public class RF_V2 extends Application {
     }   
     
     @Override
-    public void stop(){
+    public void stop() throws SQLException{
         try{
         itsTimer.cancel();
         gameTimer.cancel();
         }catch(NullPointerException e){
             System.err.println("nullPointerException capturée ligne 611");
         }
+        con.close();
     }
 
     /**
@@ -1297,3 +1391,4 @@ public class RF_V2 extends Application {
     }
     
 }
+
