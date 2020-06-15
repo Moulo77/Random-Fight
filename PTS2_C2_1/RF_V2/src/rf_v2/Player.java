@@ -15,7 +15,8 @@ public class Player {
     private final String name;
     private double posX;
     private double posY;
-    private int speed;
+    private int speed=0;
+    private int speedY=0;
     private ImageView skin;
     private int damage = 1;
 
@@ -52,6 +53,10 @@ public class Player {
         speed = aSpeed;
     }
     
+    public void setSpeedY(int aSpeedY){
+        speedY = aSpeedY;
+    }
+    
     public void setSkin(ImageView aSkin){
         skin=aSkin;
         skin.setX(posX);
@@ -67,6 +72,12 @@ public class Player {
             posX=730;
         } else if(posX<=0){
             posX=0;
+        }
+        posY += speedY;
+        if(posY <=50){
+            speedY=1;
+        } else if(posY >= 250){
+            posY=250;
         }
     }
     
