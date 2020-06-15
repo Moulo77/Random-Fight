@@ -73,7 +73,8 @@ public class RF_V2 extends Application {
     double randomX;
     Random randTargetLife = new Random();
     int targetLife;
-    DropShadow dropShadow; 
+    DropShadow dropShadow;
+    double targetPosX;
     
     boolean played = false;
     
@@ -213,7 +214,67 @@ public class RF_V2 extends Application {
         iVPlayerKickL.setPreserveRatio(true);
         iVPlayerKickL.setFitWidth(110);
         
-        Player p1 = new Player(iVPlayer,50, background.getHeight()-200);
+        file = new FileInputStream("src/RF_V2/images/jamyAcroupie.png");
+        image = new Image(file,140,170,false,false);
+        ImageView iVPlayerCrouch = new ImageView(image);
+        iVPlayerCrouch.setPreserveRatio(true);
+        iVPlayerCrouch.setFitWidth(110);
+        
+        file = new FileInputStream("src/RF_V2/images/jamyAcroupieG.png");
+        image = new Image(file,140,170,false,false);
+        ImageView iVPlayerCrouchL = new ImageView(image);
+        iVPlayerCrouchL.setPreserveRatio(true);
+        iVPlayerCrouchL.setFitWidth(110);
+        
+        file = new FileInputStream("src/RF_V2/images/jamySaut.png");
+        image = new Image(file,140,170,false,false);
+        ImageView iVPlayerJump = new ImageView(image);
+        iVPlayerJump.setPreserveRatio(true);
+        iVPlayerJump.setFitWidth(110);
+        
+        file = new FileInputStream("src/RF_V2/images/jamySautG.png");
+        image = new Image(file,140,170,false,false);
+        ImageView iVPlayerJumpL = new ImageView(image);
+        iVPlayerJumpL.setPreserveRatio(true);
+        iVPlayerJumpL.setFitWidth(110);
+        
+        file = new FileInputStream("src/RF_V2/images/jamySaut2.png");
+        image = new Image(file,140,170,false,false);
+        ImageView iVPlayerJump2 = new ImageView(image);
+        iVPlayerJump2.setPreserveRatio(true);
+        iVPlayerJump2.setFitWidth(110);
+        
+        file = new FileInputStream("src/RF_V2/images/jamySaut2G.png");
+        image = new Image(file,140,170,false,false);
+        ImageView iVPlayerJump2L = new ImageView(image);
+        iVPlayerJump2L.setPreserveRatio(true);
+        iVPlayerJump2L.setFitWidth(110);
+        
+        file = new FileInputStream("src/RF_V2/images/jamyAcroupieCoupPied.png");
+        image = new Image(file,140,170,false,false);
+        ImageView iVPlayerCrouchKick = new ImageView(image);
+        iVPlayerCrouchKick.setPreserveRatio(true);
+        iVPlayerCrouchKick.setFitWidth(110);
+        
+        file = new FileInputStream("src/RF_V2/images/jamyAcroupieCoupPiedG.png");
+        image = new Image(file,140,170,false,false);
+        ImageView iVPlayerCrouchKickL = new ImageView(image);
+        iVPlayerCrouchKickL.setPreserveRatio(true);
+        iVPlayerCrouchKickL.setFitWidth(110);
+        
+        file = new FileInputStream("src/RF_V2/images/jamyAcroupieCoupPoing.png");
+        image = new Image(file,140,170,false,false);
+        ImageView iVPlayerCrouchPunch = new ImageView(image);
+        iVPlayerCrouchPunch.setPreserveRatio(true);
+        iVPlayerCrouchPunch.setFitWidth(110);
+        
+        file = new FileInputStream("src/RF_V2/images/jamyAcroupieCoupPoingG.png");
+        image = new Image(file,140,170,false,false);
+        ImageView iVPlayerCrouchPunchL = new ImageView(image);
+        iVPlayerCrouchPunchL.setPreserveRatio(true);
+        iVPlayerCrouchPunchL.setFitWidth(110);
+        
+        Player p1 = new Player(iVPlayer,50, 250);
         
         /*
         * Création d'une cible
@@ -237,6 +298,7 @@ public class RF_V2 extends Application {
         iVTarget3.setFitWidth(90);
         
         Target target = new Target(iVTarget, 50, 2, background.getWidth()-250, background.getHeight()-180);
+        target.setSpeed(1);
         
         /*
         * Mise en place du score
@@ -268,6 +330,7 @@ public class RF_V2 extends Application {
                         do{
                         randomX = rand.nextInt(740 - 0 + 1) + 0;
                         target.setX(randomX);
+                        targetPosX = randomX;
                         targetLife = randTargetLife.nextInt((4-1)+1);
                         switch(targetLife){
                             case 1: 
@@ -304,9 +367,17 @@ public class RF_V2 extends Application {
                         
                         }while( randomX >= p1.getX()-30 && randomX <=p1.getX()+140);
                     }
+                    
+                    if(target.getX()>=targetPosX+50){
+                        target.setSpeed(-1);
+                    } else if (target.getX()<=targetPosX-50){
+                        target.setSpeed(1);
+                    }
+                    
                     textScore.setText("Score : " + String.valueOf(score.getScore()));
                     if(p1.getX() >= (target.getSkin().getX()-target.getSkin().getFitWidth()/2)
                             && p1.getX() <= (target.getSkin().getX()+target.getSkin().getFitWidth()/2)
+                            && p1.getY() >= 200
                             && target.isAlive()){
                         if(p1.getX() >= (target.getSkin().getX()-target.getSkin().getFitWidth()/2)
                                 && p1.getX() <= target.getSkin().getX()){
@@ -315,6 +386,17 @@ public class RF_V2 extends Application {
                                     && p1.getX() >= target.getSkin().getX()){
                             p1.setX(target.getSkin().getX()+ target.getSkin().getFitWidth()/2);
                         } 
+                    }
+                    if(p1.getY()==250){
+                        if(p1.getSkin()==iVPlayerJump){
+                            p1.setSkin(iVPlayer);
+                            iVPlayerJump.setVisible(false);
+                            iVPlayer.setVisible(true);
+                        } else if(p1.getSkin()==iVPlayerJumpL){
+                            p1.setSkin(iVPlayerL);
+                            iVPlayerJumpL.setVisible(false);
+                            iVPlayerL.setVisible(true);
+                        }
                     }
                 });
             }
@@ -702,6 +784,16 @@ public class RF_V2 extends Application {
         root.getChildren().add(iVPlayerL);
         root.getChildren().add(iVPlayerPunchL);
         root.getChildren().add(iVPlayerPunch);
+        root.getChildren().add(iVPlayerCrouch);
+        root.getChildren().add(iVPlayerCrouchL);
+        root.getChildren().add(iVPlayerJump);
+        root.getChildren().add(iVPlayerJumpL);
+        root.getChildren().add(iVPlayerJump2);
+        root.getChildren().add(iVPlayerJump2L);
+        root.getChildren().add(iVPlayerCrouchKick);
+        root.getChildren().add(iVPlayerCrouchKickL);
+        root.getChildren().add(iVPlayerCrouchPunch);
+        root.getChildren().add(iVPlayerCrouchPunchL);
         root.getChildren().add(iVScoreBar);
         root.getChildren().add(textScore);
         root.getChildren().add(iVTarget);
@@ -715,6 +807,16 @@ public class RF_V2 extends Application {
         iVPlayerL.setVisible(false);
         iVPlayerPunch.setVisible(false);
         iVPlayerPunchL.setVisible(false);
+        iVPlayerCrouch.setVisible(false);
+        iVPlayerCrouchL.setVisible(false);
+        iVPlayerJump.setVisible(false);
+        iVPlayerJumpL.setVisible(false);
+        iVPlayerJump2.setVisible(false);
+        iVPlayerJump2L.setVisible(false);
+        iVPlayerCrouchKick.setVisible(false);
+        iVPlayerCrouchKickL.setVisible(false);
+        iVPlayerCrouchPunch.setVisible(false);
+        iVPlayerCrouchPunchL.setVisible(false);
         scene.setFill(Color.GREEN);
         
         /*
@@ -1075,8 +1177,8 @@ public class RF_V2 extends Application {
                                 iVPlayerPunch.setVisible(true);
                                 iVPlayer.setVisible(false);
                                 p1.setSpeed(0);
-                                if(iVPlayer.getX() >= target.getSkin().getX()-(target.getSkin().getFitWidth())
-                                        && iVPlayer.getX() <= target.getSkin().getX()+(target.getSkin().getFitWidth())){
+                                if(iVPlayerPunch.getX() >= target.getSkin().getX()-(target.getSkin().getFitWidth())
+                                        && iVPlayerPunch.getX() <= target.getSkin().getX()+(target.getSkin().getFitWidth())){
                                     punchSound.play();
                                     target.hit(p1.getDamage());
                                 }
@@ -1085,8 +1187,28 @@ public class RF_V2 extends Application {
                                 iVPlayerPunchL.setVisible(true);
                                 iVPlayerL.setVisible(false);
                                 p1.setSpeed(0);
-                                if(iVPlayerL.getX() <= target.getSkin().getX()+(target.getSkin().getFitWidth())
-                                        && iVPlayerL.getX() >= target.getSkin().getX()-(target.getSkin().getFitWidth())){
+                                if(iVPlayerPunchL.getX() <= target.getSkin().getX()+(target.getSkin().getFitWidth())
+                                        && iVPlayerPunchL.getX() >= target.getSkin().getX()-(target.getSkin().getFitWidth())){
+                                    punchSound.play();
+                                    target.hit(p1.getDamage());
+                                }
+                            } else if(p1.getSkin()==iVPlayerCrouch){
+                                p1.setSkin(iVPlayerCrouchPunch);
+                                iVPlayerCrouchPunch.setVisible(true);
+                                iVPlayerCrouch.setVisible(false);
+                                p1.setSpeed(0);
+                                if(iVPlayerCrouchPunch.getX() >= target.getSkin().getX()-(target.getSkin().getFitWidth())
+                                        && iVPlayerCrouchPunch.getX() <= target.getSkin().getX()+(target.getSkin().getFitWidth()-50)){
+                                    punchSound.play();
+                                    target.hit(p1.getDamage());
+                                }
+                            } else if(p1.getSkin()==iVPlayerCrouchL){
+                                p1.setSkin(iVPlayerCrouchPunchL);
+                                iVPlayerCrouchPunchL.setVisible(true);
+                                iVPlayerCrouchL.setVisible(false);
+                                p1.setSpeed(0);
+                                if(iVPlayerCrouchPunchL.getX() <= target.getSkin().getX()+(target.getSkin().getFitWidth())
+                                        && iVPlayerCrouchPunchL.getX() >= target.getSkin().getX()-(target.getSkin().getFitWidth()-50)){
                                     punchSound.play();
                                     target.hit(p1.getDamage());
                                 }
@@ -1117,30 +1239,107 @@ public class RF_V2 extends Application {
                                     kickSound.play();
                                     target.hit(p1.getDamage());
                                 }
+                            } else if(p1.getSkin()== iVPlayerCrouch){
+                                p1.setSkin(iVPlayerCrouchKick);
+                                iVPlayerCrouchKick.setVisible(true);
+                                iVPlayerCrouch.setVisible(false);
+                                p1.setSpeed(0);
+                                if(iVPlayerCrouchKick.getX() >= target.getSkin().getX()-(target.getSkin().getFitWidth())
+                                        && iVPlayerCrouchKick.getX() <= target.getSkin().getX()+(target.getSkin().getFitWidth()-50)){
+                                    kickSound.play();
+                                    target.hit(p1.getDamage());
+                                }
+                            } else if(p1.getSkin()== iVPlayerCrouchL){
+                                p1.setSkin(iVPlayerCrouchKickL);
+                                iVPlayerCrouchKickL.setVisible(true);
+                                iVPlayerCrouchL.setVisible(false);
+                                p1.setSpeed(0);
+                                if(iVPlayerCrouchKickL.getX() <= target.getSkin().getX()+(target.getSkin().getFitWidth())
+                                        && iVPlayerCrouchKickL.getX() >= target.getSkin().getX()-(target.getSkin().getFitWidth()-50)){
+                                    kickSound.play();
+                                    target.hit(p1.getDamage());
+                                }
                             }
+                    
                             if(target.getLifePoints() <= 0){
                                 score.addPoints(target.getPoints());
                                 root.getChildren().remove(iVTarget);
                             }
                             break;
                     case LEFT: if(p1.getSkin()!=iVPlayerPunch && p1.getSkin()!= iVPlayerPunchL
-                                    && p1.getSkin() != iVPlayerKick && p1.getSkin() != iVPlayerKickL ){
-                            p1.setSkin(iVPlayerL);
-                            iVPlayerL.setVisible(true);
-                            iVPlayer.setVisible(false);
-                            p1.setSpeed(-1);
-                            vitesse=-1;
-                        }
+                                    && p1.getSkin() != iVPlayerKick && p1.getSkin() != iVPlayerKickL 
+                                    && p1.getSkin() != iVPlayerCrouch && p1.getSkin()!= iVPlayerCrouchL
+                                    && p1.getSkin() != iVPlayerJump && p1.getSkin() != iVPlayerJumpL
+                                    && p1.getSkin() != iVPlayerCrouchPunch && p1.getSkin()!=iVPlayerCrouchPunchL
+                                    && p1.getSkin()!=iVPlayerCrouchKick && p1.getSkin()!=iVPlayerCrouchKickL){
+                                p1.setSkin(iVPlayerL);
+                                iVPlayerL.setVisible(true);
+                                iVPlayer.setVisible(false);
+                                iVPlayerJump2.setVisible(false);
+                                iVPlayerJump2L.setVisible(false);
+                                p1.setSpeed(-1);
+                                vitesse=-1;
+                            } else if(p1.getSkin()== iVPlayerCrouch || p1.getSkin()==iVPlayerCrouchL){
+                                p1.setSpeed(-1);
+                                vitesse=-1;
+                            } else if(p1.getSkin()== iVPlayerJump || p1.getSkin()==iVPlayerJumpL){
+                                p1.setSpeed(-1);
+                                vitesse=-1;
+                                p1.setSkin(iVPlayerJumpL);
+                                iVPlayerJumpL.setVisible(true);
+                                iVPlayerJump.setVisible(false);
+                            }
                         break;
                     case RIGHT: if(p1.getSkin()!=iVPlayerPunch && p1.getSkin()!= iVPlayerPunchL
-                            && p1.getSkin() != iVPlayerKick && p1.getSkin() != iVPlayerKickL){
-                        p1.setSkin(iVPlayer);
-                        iVPlayer.setVisible(true);
-                        iVPlayerL.setVisible(false);
+                            && p1.getSkin() != iVPlayerKick && p1.getSkin() != iVPlayerKickL
+                            && p1.getSkin() != iVPlayerCrouch && p1.getSkin()!= iVPlayerCrouchL
+                            && p1.getSkin() != iVPlayerJump && p1.getSkin() != iVPlayerJumpL
+                            && p1.getSkin() != iVPlayerCrouchPunch && p1.getSkin()!=iVPlayerCrouchPunchL
+                            && p1.getSkin()!=iVPlayerCrouchKick && p1.getSkin()!=iVPlayerCrouchKickL){
+                            p1.setSkin(iVPlayer);
+                            iVPlayer.setVisible(true);
+                            iVPlayerL.setVisible(false);
+                            iVPlayerJump2.setVisible(false);
+                            iVPlayerJump2L.setVisible(false);
                             p1.setSpeed(1);
                             vitesse=1;
-                        }
+                        } else if(p1.getSkin()== iVPlayerCrouch || p1.getSkin()==iVPlayerCrouchL){
+                            p1.setSpeed(1);
+                            vitesse=1;
+                        } else if(p1.getSkin()== iVPlayerJump || p1.getSkin()==iVPlayerJumpL){
+                                p1.setSpeed(1);
+                                vitesse=1;
+                                p1.setSkin(iVPlayerJump);
+                                iVPlayerJump.setVisible(true);
+                                iVPlayerJumpL.setVisible(false);
+                            }
                         break;
+                    case DOWN: if(p1.getSkin()!=iVPlayerPunch && p1.getSkin()!= iVPlayerPunchL
+                            && p1.getSkin() != iVPlayerKick && p1.getSkin() != iVPlayerKickL){
+                            if(p1.getSkin()==iVPlayer){
+                                p1.setSkin(iVPlayerCrouch);
+                                iVPlayerCrouch.setVisible(true);
+                                iVPlayer.setVisible(false);
+                            } else if(p1.getSkin()==iVPlayerL){
+                                p1.setSkin(iVPlayerCrouchL);
+                                iVPlayerCrouchL.setVisible(true);
+                                iVPlayerL.setVisible(false);
+                            }
+                        }
+                    break;
+                    case UP: if(p1.getSkin()!=iVPlayerPunch && p1.getSkin()!= iVPlayerPunchL
+                            && p1.getSkin() != iVPlayerKick && p1.getSkin() != iVPlayerKickL){
+                            if(p1.getSkin()==iVPlayer){
+                                p1.setSkin(iVPlayerJump2);
+                                iVPlayerJump2.setVisible(true);
+                                iVPlayer.setVisible(false);
+                            } else if(p1.getSkin()==iVPlayerL){
+                                p1.setSkin(iVPlayerJump2L);
+                                iVPlayerJump2L.setVisible(true);
+                                iVPlayerL.setVisible(false);
+                            }
+                        }
+                    break;
                     case ESCAPE: primaryStage.setScene(pause);
                                  timeTemp = time;
                                  gameTimer.cancel();
@@ -1164,6 +1363,14 @@ public class RF_V2 extends Application {
                     p1.setSkin(iVPlayerL);
                     iVPlayerL.setVisible(true);
                     iVPlayerPunchL.setVisible(false);
+                } else if(p1.getSkin()==iVPlayerCrouchPunch){
+                    p1.setSkin(iVPlayerCrouch);
+                    iVPlayerCrouchPunch.setVisible(false);
+                    iVPlayerCrouch.setVisible(true);
+                } else if(p1.getSkin()==iVPlayerCrouchPunchL){
+                    p1.setSkin(iVPlayerCrouchL);
+                    iVPlayerCrouchPunchL.setVisible(false);
+                    iVPlayerCrouchL.setVisible(true);
                 }
                 p1.setSpeed(vitesse);
                 punchSound.setOnEndOfMedia(() ->{
@@ -1178,6 +1385,14 @@ public class RF_V2 extends Application {
                     p1.setSkin(iVPlayerL);
                     iVPlayerL.setVisible(true);
                     iVPlayerKickL.setVisible(false);
+                } else if(p1.getSkin()==iVPlayerCrouchKick){
+                    p1.setSkin(iVPlayerCrouch);
+                    iVPlayerCrouchKick.setVisible(false);
+                    iVPlayerCrouch.setVisible(true);
+                } else if(p1.getSkin()==iVPlayerCrouchKickL){
+                    p1.setSkin(iVPlayerCrouchL);
+                    iVPlayerCrouchKickL.setVisible(false);
+                    iVPlayerCrouchL.setVisible(true);
                 }
                 p1.setSpeed(vitesse);
                 kickSound.setOnEndOfMedia(() ->{
@@ -1186,6 +1401,28 @@ public class RF_V2 extends Application {
             }else if(keyCode.equals(KeyCode.LEFT) || keyCode.equals(KeyCode.RIGHT)){
                 p1.setSpeed(0);
                 vitesse=0;
+            }else if(keyCode.equals(KeyCode.DOWN)){
+                if(p1.getSkin()==iVPlayerCrouch){
+                    p1.setSkin(iVPlayer);
+                    iVPlayerCrouch.setVisible(false);
+                    iVPlayer.setVisible(true);
+                } else if(p1.getSkin()==iVPlayerCrouchL){
+                    p1.setSkin(iVPlayerL);
+                    iVPlayerCrouchL.setVisible(false);
+                    iVPlayerL.setVisible(true);
+                }
+            } else if(keyCode.equals(KeyCode.UP)){
+                if(p1.getSkin()==iVPlayerJump2){
+                    p1.setSkin(iVPlayerJump);
+                    iVPlayerJump.setVisible(true);
+                    iVPlayerJump2.setVisible(false);
+                    p1.setSpeedY(-1);
+                } else if(p1.getSkin()==iVPlayerJump2L){
+                    p1.setSkin(iVPlayerJumpL);
+                    iVPlayerJumpL.setVisible(true);
+                    iVPlayerJump2L.setVisible(false);
+                    p1.setSpeedY(-1);
+                }
             }
         });
         
@@ -1221,6 +1458,7 @@ public class RF_V2 extends Application {
                         validateButton.setVisible(true);
                         pseudoEntry.setVisible(true);
                         p1.getSkin().setVisible(false);
+                        p1.setX(50);
                         root.getChildren().remove(iVPlayer);
                         root.getChildren().remove(iVPlayerL);
                         root.getChildren().remove(iVPlayerPunchL);
