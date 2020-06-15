@@ -18,6 +18,7 @@ public class Target extends Parent{
     private double posX;
     private double posY;
     private ImageView skin;
+    private double speed;
 
     public Target(ImageView skin, int points, int lifePoints, double posX, double posY) {
         this.points = points;
@@ -29,6 +30,10 @@ public class Target extends Parent{
     
     public double getX(){
         return posX;
+    }
+    
+    public double getY(){
+        return posY;
     }
     
     public void setX(double aX){
@@ -72,12 +77,26 @@ public class Target extends Parent{
         
         return alive;
     }
+    
+    public void setSpeed(int aSpeed){
+        speed = aSpeed;
+    }
 
     public double getPosX() {
         return posX;
     }
     
+    public void calculatePosition(){
+        posX += speed/4;
+        if(posX >= 730){
+            speed=-1;
+        } else if(posX<=0){
+            posX=1;
+        }
+    }
+    
     public void draw(){
+        calculatePosition();
         skin.setX(posX);
         skin.setY(posY);
     }
