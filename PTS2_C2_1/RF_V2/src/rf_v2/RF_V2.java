@@ -1550,7 +1550,7 @@ public class RF_V2 extends Application {
             score.setScore(0);
         });
     
-        
+        primaryStage.getIcons().add(new Image(RF_V2.class.getResourceAsStream("images/icon.png")));
         primaryStage.setTitle("Random Fight V2");
         primaryStage.setScene(menuScene);
         primaryStage.show();
