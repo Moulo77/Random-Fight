@@ -71,7 +71,7 @@ public class RF_V2 extends Application {
     double musicTime;
     Random rand = new Random();
     double randomX;
-    Random randTargetLife = new Random();
+    Random randTargetLife = new Random();   
     int targetLife;
     DropShadow dropShadow;
     double targetPosX;
@@ -82,6 +82,8 @@ public class RF_V2 extends Application {
     
     @Override
     public void start(Stage primaryStage) throws FileNotFoundException {
+        primaryStage.getIcons().add(new Image(RF_V2.class.getResourceAsStream("images/icon.png")));
+        
         AnchorPane root = new AnchorPane();
         
         /*
@@ -565,8 +567,8 @@ public class RF_V2 extends Application {
                 
                 i++;
             }
-            r.close();
             p.close();
+            r.close();
         }
         catch ( SQLException s)
         {
@@ -907,6 +909,55 @@ public class RF_V2 extends Application {
                 System.err.println("Exception 4 : "+ ex);
             }
             validateButton.setDisable(true);
+            
+        
+            String[] bestsScores2 = new String[5];
+            String[] bestsScorePseudo2 = new String[5];
+        
+            PreparedStatement p2 = null;
+            ResultSet r2 = null;
+        
+            int j = 0;
+                
+            try
+            {
+                p2 = con.prepareStatement( sql );
+                p2.clearParameters();
+            
+                r2 = p2.executeQuery();
+            
+                int points2;
+                String pseudo2;
+            
+                while (r2.next() && j<5)
+                {
+                    points2 = r2.getInt(1);
+                    pseudo2 = r2.getString("pseudo");
+                
+                    bestsScores2[j] = String.valueOf(points2);
+                    bestsScorePseudo2[j] = pseudo2;
+                
+                    j++;
+                }
+                p2.close();
+                r2.close();
+            }
+            catch ( SQLException s)
+            {
+                System.out.println("Exception 3 : "+ s);
+            }
+            
+            pseudoPlayer1.setText(bestsScorePseudo2[0]);
+            pseudoPlayer2.setText(bestsScorePseudo2[1]);
+            pseudoPlayer3.setText(bestsScorePseudo2[2]);
+            pseudoPlayer4.setText(bestsScorePseudo2[3]);
+            pseudoPlayer5.setText(bestsScorePseudo2[4]);
+        
+            scorePlayer1.setText(bestsScores2[0]);
+            scorePlayer2.setText(bestsScores2[1]);
+            scorePlayer3.setText(bestsScores2[2]);
+            scorePlayer4.setText(bestsScores2[3]);
+            scorePlayer5.setText(bestsScores2[4]);
         });
         
         /*
@@ -1045,9 +1096,9 @@ public class RF_V2 extends Application {
         kick2.setY(390);
         
         Text volumeText2 = new Text("Volume");
-        volumeText.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
-        volumeText.setFill(Color.WHITE);
-        volumeText.setEffect(dropShadow);
+        volumeText2.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        volumeText2.setFill(Color.WHITE);
+        volumeText2.setEffect(dropShadow);
         volumeText2.setX(565);
         volumeText2.setY(175);
         
@@ -1550,7 +1601,7 @@ public class RF_V2 extends Application {
             score.setScore(0);
         });
     
-        primaryStage.getIcons().add(new Image(RF_V2.class.getResourceAsStream("images/icon.png")));
+        
         primaryStage.setTitle("Random Fight V2");
         primaryStage.setScene(menuScene);
         primaryStage.show();
@@ -1571,60 +1622,6 @@ public class RF_V2 extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // connection to SQLite data base named Scores
-        /*
-        try 
-        {
-            Class.forName("org.sqlite.JDBC");
-        }
-        catch(Exception e )
-        {
-            System.out.println("Exception found ! " + e);  
-        }
-        
-        Connection con = null;
-        
-        try
-        {
-            con = DriverManager.getConnection("jdbc:sqlite:Scores.db");
-        }
-        catch (SQLException s)
-        {
-            System.out.println("Exception 2 : "+ s);
-        }
-        
-        String sql = "SELECT * FROM Scores ORDER by points DESC";
-        
-        PreparedStatement p = null;
-        ResultSet r = null;
-        
-        try
-        {
-            p = con.prepareStatement( sql );
-            p.clearParameters();
-            
-            r = p.executeQuery();
-            
-            int points;
-            String pseudo;
-            
-            while (r.next())
-            {
-                points = r.getInt(1);
-                pseudo = r.getString("pseudo");
-                
-                System.out.println (pseudo + " | " + points + " points");
-            }
-            r.close();
-            p.close();
-            con.close();
-        }
-        catch ( SQLException s)
-        {
-            System.out.println("Exception 3 : "+ s);
-        }
-        // end of connection code
-        */
             launch(args);
     }
     
