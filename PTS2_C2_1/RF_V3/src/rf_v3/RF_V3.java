@@ -80,6 +80,7 @@ public class RF_V3 extends Application {
     int timeTemp;
     int life = 10;
     int luckBoss =0;
+    int map=1;
     
     double musicTime;
     double randomX;
@@ -289,7 +290,25 @@ public class RF_V3 extends Application {
                                                             BackgroundRepeat.NO_REPEAT,
                                                             BackgroundPosition.CENTER,
                                                             BackgroundSize.DEFAULT);
-        Background BG = new Background(background_img);
+        Background BG1 = new Background(background_img);
+        
+        backgroundFile = new FileInputStream("src/RF_V3/images/Map3.jpg");
+        Image background2 = new Image(backgroundFile);
+        BackgroundImage background_img2 = new BackgroundImage(background2,
+                                                            BackgroundRepeat.NO_REPEAT,
+                                                            BackgroundRepeat.NO_REPEAT,
+                                                            BackgroundPosition.CENTER,
+                                                            BackgroundSize.DEFAULT);
+        Background BG2 = new Background(background_img2);
+        
+        backgroundFile = new FileInputStream("src/RF_V3/images/Map4.png");
+        Image background3 = new Image(backgroundFile);
+        BackgroundImage background_img3 = new BackgroundImage(background3,
+                                                            BackgroundRepeat.NO_REPEAT,
+                                                            BackgroundRepeat.NO_REPEAT,
+                                                            BackgroundPosition.CENTER,
+                                                            BackgroundSize.DEFAULT);
+        Background BG3 = new Background(background_img3);
         
         
         FileInputStream menuBackgroundFile = new FileInputStream("src/RF_V3/images/menuBackground.png");
@@ -301,7 +320,7 @@ public class RF_V3 extends Application {
                                                             BackgroundSize.DEFAULT);
         Background menuBG = new Background(menuBackgroundImg);
         
-        arcadePane.setBackground(BG);
+        arcadePane.setBackground(BG2);
         
         Scene arcadeScene = new Scene(arcadePane, background.getWidth(), background.getHeight());
         
@@ -867,6 +886,49 @@ public class RF_V3 extends Application {
         tLifeValue.setFill(Color.WHITE);
         tLifeValue.setEffect(dropShadow);
         
+        Text tMapValue = new Text("map 1");
+        tMapValue.setX(550);
+        tMapValue.setY(80);
+        tMapValue.setFont(wallpoet);
+        tMapValue.setFill(Color.WHITE);
+        tMapValue.setEffect(dropShadow);
+        
+        Text tMap1 = new Text("map 1");
+        tMap1.setFill(Color.WHITE);
+        tMap1.setEffect(dropShadow);
+        tMap1.setFont(wallpoet);
+        Button map1 = new Button();
+        map1.setBackground(new Background(buttonBackground));
+        map1.setGraphic(tMap1);
+        map1.setMinHeight(30);
+        map1.setMinWidth(40);
+        map1.setTranslateX(450);
+        map1.setTranslateY(130);
+        
+        Text tMap2 = new Text("map 2");
+        tMap2.setFill(Color.WHITE);
+        tMap2.setEffect(dropShadow);
+        tMap2.setFont(wallpoet);
+        Button map2 = new Button();
+        map2.setBackground(new Background(buttonBackground));
+        map2.setGraphic(tMap2);
+        map2.setMinHeight(30);
+        map2.setMinWidth(30);
+        map2.setTranslateX(550);
+        map2.setTranslateY(130);
+        
+        Text tMap3 = new Text("map 2");
+        tMap3.setFill(Color.WHITE);
+        tMap3.setEffect(dropShadow);
+        tMap3.setFont(wallpoet);
+        Button map3 = new Button();
+        map3.setBackground(new Background(buttonBackground));
+        map3.setGraphic(tMap3);
+        map3.setMinHeight(30);
+        map3.setMinWidth(30);
+        map3.setTranslateX(660);
+        map3.setTranslateY(130);
+        
         Text multiText = new Text("Play");
         multiText.setFill(Color.WHITE);
         multiText.setEffect(dropShadow);
@@ -888,6 +950,10 @@ public class RF_V3 extends Application {
         multiOptionsPane.getChildren().add(tLife);
         multiOptionsPane.getChildren().add(tLifeValue);
         multiOptionsPane.getChildren().add(playMulti);
+        multiOptionsPane.getChildren().add(tMapValue);
+        multiOptionsPane.getChildren().add(map1);
+        multiOptionsPane.getChildren().add(map2);
+        multiOptionsPane.getChildren().add(map3);
         
         Scene multiOptionsScene = new Scene(multiOptionsPane, 800, 450);
         
@@ -1204,6 +1270,24 @@ public class RF_V3 extends Application {
             life -= 1;
             }
             tLifeValue.setText(String.valueOf(life));
+        });
+        
+        map1.setOnAction((ActionEvent event) ->{
+            map =1;
+            multiPane.setBackground(BG1);
+            tMapValue.setText("map 1");
+        });
+        
+        map2.setOnAction((ActionEvent event) ->{
+            map =2;
+            multiPane.setBackground(BG2);
+            tMapValue.setText("map 2");
+        });
+        
+        map3.setOnAction((ActionEvent event) ->{
+            map =3;
+            multiPane.setBackground(BG3);
+            tMapValue.setText("map 3");
         });
         
         validateButton.setOnAction((ActionEvent event) -> {
