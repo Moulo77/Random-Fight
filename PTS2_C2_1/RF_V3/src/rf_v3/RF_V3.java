@@ -1751,6 +1751,9 @@ public class RF_V3 extends Application {
             menuMusic.stop();
             gameMusic.play();
             score.setScore(0);
+            p1.getSkin().setVisible(true);
+            iVPlayer.setImage(iPlayer);
+            iVTarget.setVisible(true);
             time = 120;
             p1.setX(50);
             TimerTask timerTask = new TimerTask() {
@@ -1940,9 +1943,9 @@ public class RF_V3 extends Application {
                             menuMulti.setVisible(true);
                             tWinner.setVisible(true);
                             if(p2.getLife()>p3.getLife()){
-                            tWinner.setText("player 1 win!");
+                            tWinner.setText("player 1 wins!");
                         } else if(p3.getLife()>p2.getLife()){
-                            tWinner.setText("player 2 win!");
+                            tWinner.setText("player 2 wins!");
                         } else {
                             tWinner.setText("draw!");
                         }
@@ -1967,6 +1970,10 @@ public class RF_V3 extends Application {
             replayMulti.setVisible(false);
             menuMulti.setVisible(false);
             tWinner.setVisible(false);
+            p2.getSkin().setVisible(true);
+            p3.getSkin().setVisible(true);
+            iVPlayer2.setImage(iSailor);
+            iVPlayer3.setImage(iBenderL);
             p2.setX(50);
             p3.setX(550);
             p2.setLife(life);
@@ -1992,9 +1999,9 @@ public class RF_V3 extends Application {
                         p2.getSkin().setVisible(false);
                         p3.getSkin().setVisible(false);
                         if(p2.getLife()>p3.getLife()){
-                            tWinner.setText("player 1 win!");
+                            tWinner.setText("player 1 wins!");
                         } else if(p3.getLife()>p2.getLife()){
-                            tWinner.setText("player 2 win!");
+                            tWinner.setText("player 2 wins!");
                         } else {
                             tWinner.setText("draw!");
                         }
