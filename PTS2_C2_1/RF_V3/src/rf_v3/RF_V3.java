@@ -964,7 +964,7 @@ public class RF_V3 extends Application {
         // =====================================================================
         
         AnchorPane multiPane = new AnchorPane();
-        multiPane.setBackground(BG);
+        multiPane.setBackground(BG1);
         
         Text tP2Life = new Text();
         tP2Life.setX(27);
