@@ -1166,7 +1166,12 @@ public class RF_V3 extends Application {
             @Override
             public void handle(KeyEvent event) {
                 if(event.getCode().equals(KeyCode.ESCAPE)){
+                    if(oldScene==2){
+                        primaryStage.setScene(pauseScene);
+                    } else{
                     primaryStage.setScene(menuScene);
+                    }
+                
                 }
             }
             
