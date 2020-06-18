@@ -820,7 +820,7 @@ public class RF_V3 extends Application {
         addTime.setGraphic(tAddTime);
         addTime.setMinHeight(30);
         addTime.setMinWidth(30);
-        addTime.setTranslateX(450);
+        addTime.setTranslateX(350);
         addTime.setTranslateY(100);
         
         Text tReduceTime = new Text("moins");
@@ -832,18 +832,18 @@ public class RF_V3 extends Application {
         reduceTime.setGraphic(tReduceTime);
         reduceTime.setMinHeight(30);
         reduceTime.setMinWidth(30);
-        reduceTime.setTranslateX(180);
+        reduceTime.setTranslateX(80);
         reduceTime.setTranslateY(100);
         
         Text tTime = new Text("Temps :");
-        tTime.setX(300);
+        tTime.setX(200);
         tTime.setY(50);
         tTime.setFont(wallpoet);
         tTime.setFill(Color.WHITE);
         tTime.setEffect(dropShadow);
         
         Text tTimeValue = new Text("120s");
-        tTimeValue.setX(320);
+        tTimeValue.setX(220);
         tTimeValue.setY(120);
         tTimeValue.setFont(wallpoet);
         tTimeValue.setFill(Color.WHITE);
@@ -858,7 +858,7 @@ public class RF_V3 extends Application {
         addLife.setGraphic(tAddLife);
         addLife.setMinHeight(30);
         addLife.setMinWidth(30);
-        addLife.setTranslateX(450);
+        addLife.setTranslateX(350);
         addLife.setTranslateY(250);
         
         Text tReduceLife = new Text("moins");
@@ -870,18 +870,18 @@ public class RF_V3 extends Application {
         reduceLife.setGraphic(tReduceLife);
         reduceLife.setMinHeight(30);
         reduceLife.setMinWidth(30);
-        reduceLife.setTranslateX(180);
+        reduceLife.setTranslateX(80);
         reduceLife.setTranslateY(250);
         
         Text tLife = new Text("points de vies :");
-        tLife.setX(300);
+        tLife.setX(200);
         tLife.setY(200);
         tLife.setFont(wallpoet);
         tLife.setFill(Color.WHITE);
         tLife.setEffect(dropShadow);
         
         Text tLifeValue = new Text("10");
-        tLifeValue.setX(320);
+        tLifeValue.setX(220);
         tLifeValue.setY(270);
         tLifeValue.setFont(wallpoet);
         tLifeValue.setFill(Color.WHITE);
