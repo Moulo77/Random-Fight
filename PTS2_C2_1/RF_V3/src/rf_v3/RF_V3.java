@@ -451,7 +451,6 @@ public class RF_V3 extends Application {
         // =====================================================================
         // Menu Score
         // =====================================================================
-        /*
         GridPane scorePane = new GridPane();
         scorePane.setAlignment(Pos.TOP_CENTER);
         scorePane.setVgap(25);
@@ -574,7 +573,7 @@ public class RF_V3 extends Application {
         Scene scoreTable = new Scene(scorePane, 800, 450);
         
         
-        */
+        
         // =====================================================================
         // Menu paramètres
         // =====================================================================
@@ -694,7 +693,35 @@ public class RF_V3 extends Application {
             }
         });
        
+        Text volumeSoundsText = new Text("Sounds volume");
+        volumeSoundsText.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        volumeSoundsText.setFill(Color.WHITE);
+        volumeSoundsText.setEffect(dropShadow);
+        volumeSoundsText.setX(530);
+        volumeSoundsText.setY(250);
         
+        Slider volumeSoundsSlider = new Slider(0, 1, 0);
+        volumeSoundsSlider.setEffect(dropShadow);
+        volumeSoundsSlider.setTranslateX(550);
+        volumeSoundsSlider.setTranslateY(275);
+        volumeSoundsSlider.setValue(0.5);
+        
+        punchSound.volumeProperty().bindBidirectional(volumeSoundsSlider.valueProperty());
+        kickSound.volumeProperty().bindBidirectional(volumeSoundsSlider.valueProperty());
+        
+        Text volumeSoundsPercent = new Text("50%");
+        volumeSoundsPercent.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 25));
+        volumeSoundsPercent.setFill(Color.WHITE);
+        volumeSoundsPercent.setEffect(dropShadow);
+        volumeSoundsPercent.setX(600);
+        volumeSoundsPercent.setY(325);
+        
+        volumeSoundsSlider.valueProperty().addListener(new ChangeListener<Number>(){
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                volumeSoundsPercent.setText(Math.round(newValue.doubleValue()*100) + "%");
+            }
+        });
         
         AnchorPane settingsPane = new AnchorPane();
         settingsPane.setBackground(menuBG);
@@ -702,6 +729,9 @@ public class RF_V3 extends Application {
         settingsPane.getChildren().add(volumePercent);
         settingsPane.getChildren().add(volumeText);
         settingsPane.getChildren().add(volumeSlider);
+        settingsPane.getChildren().add(volumeSoundsPercent);
+        settingsPane.getChildren().add(volumeSoundsText);
+        settingsPane.getChildren().add(volumeSoundsSlider);
         settingsPane.getChildren().add(leftArrow);
         settingsPane.getChildren().add(moveLeft);
         settingsPane.getChildren().add(rightArrow);
@@ -987,25 +1017,16 @@ public class RF_V3 extends Application {
         
         StringProperty endGamePseudo = new SimpleStringProperty();
         
-        validateButton.setOnAction((ActionEvent event) -> {
-            try {
-                PreparedStatement prep = con.prepareStatement("INSERT INTO Scores VALUES(?,?);");
-                if(score.getScore()!=0){
-                    prep.setInt(1, score.getScore());
-                }else{
-                    prep.setNull(1, score.getScore());
+        //Limite du pseudo à 10 caractères
+        pseudoEntry.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if(newValue.length() >10){
+                    pseudoEntry.setText(oldValue);
                 }
-                
-                prep.setString(2, pseudoEntry.getText());
-                prep.execute();
-                prep.close();
-            } catch (SQLException ex) {
-                System.err.println("Exception 4 : "+ ex);
             }
-            validateButton.setDisable(true);
+            
         });
-        
-        
         
         // =====================================================================
         // Fenêtre pause
@@ -1064,7 +1085,7 @@ public class RF_V3 extends Application {
         // Retour echap
         // =====================================================================
         
-        /*scoreTable.setOnKeyPressed(new EventHandler<KeyEvent>(){
+        scoreTable.setOnKeyPressed(new EventHandler<KeyEvent>(){
             @Override
             public void handle(KeyEvent event) {
                 if(event.getCode() == KeyCode.ESCAPE){
@@ -1072,7 +1093,7 @@ public class RF_V3 extends Application {
                 }
             }
             
-        });*/
+        });
         
         settingsScene.setOnKeyPressed(new EventHandler<KeyEvent>(){
             @Override
@@ -1109,10 +1130,10 @@ public class RF_V3 extends Application {
         // bouton
         // =====================================================================
         
-        /*scoreButton.setOnAction((ActionEvent event) ->{
+        scoreButton.setOnAction((ActionEvent event) ->{
             oldScene = 1;
             primaryStage.setScene(scoreTable);
-        });*/
+        });
         
         settingsButton.setOnAction((ActionEvent event) ->{
             oldScene = 1;
@@ -1185,7 +1206,80 @@ public class RF_V3 extends Application {
             tLifeValue.setText(String.valueOf(life));
         });
         
+        validateButton.setOnAction((ActionEvent event) -> {
+            if(pseudoEntry.getText().length() >0){
+                try {
+                    PreparedStatement prep = con.prepareStatement("INSERT INTO Scores VALUES(?,?);");
+                    if(score.getScore()!=0){
+                        prep.setInt(1, score.getScore());
+                    }else{
+                        prep.setNull(1, score.getScore());
+                    }
+                
+                    prep.setString(2, pseudoEntry.getText());
+                    prep.execute();
+                    prep.close();
+                } catch (SQLException ex) {
+                    System.err.println("Exception 4 : "+ ex);
+                }
+                validateButton.setDisable(true);
+            }else{
+                Alert pseudoAlert = new Alert(Alert.AlertType.WARNING);
+                pseudoAlert.setTitle("Pseudo warning !");
+                pseudoAlert.setHeaderText("Empty pseudo");
+                pseudoAlert.setContentText("You have to type a correct peudo ");
+                pseudoAlert.showAndWait();
+            }
+            
         
+            String[] bestsScores2 = new String[5];
+            String[] bestsScorePseudo2 = new String[5];
+        
+            PreparedStatement pS2 = null;
+            ResultSet r2 = null;
+        
+            int j = 0;
+                
+            try
+            {
+                pS2 = con.prepareStatement( sql );
+                pS2.clearParameters();
+            
+                r2 = pS2.executeQuery();
+            
+                int points2;
+                String pseudo2;
+            
+                while (r2.next() && j<5)
+                {
+                    points2 = r2.getInt(1);
+                    pseudo2 = r2.getString("pseudo");
+                
+                    bestsScores2[j] = String.valueOf(points2);
+                    bestsScorePseudo2[j] = pseudo2;
+                
+                    j++;
+                }
+                pS2.close();
+                r2.close();
+            }
+            catch ( SQLException s)
+            {
+                System.out.println("Exception 3 : "+ s);
+            }
+            
+            pseudoPlayer1.setText(bestsScorePseudo2[0]);
+            pseudoPlayer2.setText(bestsScorePseudo2[1]);
+            pseudoPlayer3.setText(bestsScorePseudo2[2]);
+            pseudoPlayer4.setText(bestsScorePseudo2[3]);
+            pseudoPlayer5.setText(bestsScorePseudo2[4]);
+        
+            scorePlayer1.setText(bestsScores2[0]);
+            scorePlayer2.setText(bestsScores2[1]);
+            scorePlayer3.setText(bestsScores2[2]);
+            scorePlayer4.setText(bestsScores2[3]);
+            scorePlayer5.setText(bestsScores2[4]);
+        });
         
         // =====================================================================
         //
@@ -2115,8 +2209,9 @@ public class RF_V3 extends Application {
         
         
         
-        
-        primaryStage.setTitle("Random Fight V2");
+        primaryStage.getIcons().add(new Image(RF_V3.class.getResourceAsStream("images/icon.png")));
+        primaryStage.setResizable(false);
+        primaryStage.setTitle("Random Fight V3");
         primaryStage.setScene(menuScene);
         primaryStage.show();
         
