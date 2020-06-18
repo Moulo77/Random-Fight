@@ -474,7 +474,449 @@ public class RF_V3 extends Application {
         menuPane.getChildren().add(play);
         menuPane.getChildren().add(exit);
         
+        // =====================================================================
+        // Menu paramètres
+        // =====================================================================
+        Text leftArrow = new Text("←");
+        leftArrow.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        leftArrow.setFill(Color.WHITE);
+        leftArrow.setEffect(dropShadow);
+        leftArrow.setX(150);
+        leftArrow.setY(90);
         
+        Text moveLeft = new Text("move left");
+        moveLeft.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        moveLeft.setFill(Color.WHITE);
+        moveLeft.setEffect(dropShadow);
+        moveLeft.setX(200);
+        moveLeft.setY(90);
+        
+        Text rightArrow = new Text("→");
+        rightArrow.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        rightArrow.setFill(Color.WHITE);
+        rightArrow.setEffect(dropShadow);
+        rightArrow.setX(150);
+        rightArrow.setY(150);
+        
+        Text moveRight = new Text("move left");
+        moveRight.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        moveRight.setFill(Color.WHITE);
+        moveRight.setEffect(dropShadow);
+        moveRight.setX(200);
+        moveRight.setY(150);
+        
+        Text upArrow = new Text("↑");
+        upArrow.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        upArrow.setFill(Color.WHITE);
+        upArrow.setEffect(dropShadow);
+        upArrow.setX(150);
+        upArrow.setY(210);
+        
+        Text jump = new Text("jump");
+        jump.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        jump.setFill(Color.WHITE);
+        jump.setEffect(dropShadow);
+        jump.setX(200);
+        jump.setY(210);
+        
+        Text downArrow = new Text("↓");
+        downArrow.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        downArrow.setFill(Color.WHITE);
+        downArrow.setEffect(dropShadow);
+        downArrow.setX(150);
+        downArrow.setY(270);
+        
+        Text crouch = new Text("crouch");
+        crouch.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        crouch.setFill(Color.WHITE);
+        crouch.setEffect(dropShadow);
+        crouch.setX(200);
+        crouch.setY(270);
+        
+        Text A = new Text("A");
+        A.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        A.setFill(Color.WHITE);
+        A.setEffect(dropShadow);
+        A.setX(150);
+        A.setY(330);
+        
+        Text punch = new Text ("punch");
+        punch.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        punch.setFill(Color.WHITE);
+        punch.setEffect(dropShadow);
+        punch.setX(200);
+        punch.setY(330);
+
+        Text Z = new Text("Z");
+        Z.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        Z.setFill(Color.WHITE);
+        Z.setEffect(dropShadow);
+        Z.setX(150);
+        Z.setY(390);
+        
+        Text kick = new Text ("kick");
+        kick.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        kick.setFill(Color.WHITE);
+        kick.setEffect(dropShadow);
+        kick.setX(200);
+        kick.setY(390);
+        
+        Text volumeText = new Text("Music volume");
+        volumeText.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        volumeText.setFill(Color.WHITE);
+        volumeText.setEffect(dropShadow);
+        volumeText.setX(540);
+        volumeText.setY(100);
+        
+        Slider volumeSlider = new Slider(0, 1, 0);
+        volumeSlider.setEffect(dropShadow);
+        volumeSlider.setTranslateX(550);
+        volumeSlider.setTranslateY(125);
+        volumeSlider.setValue(0.5);
+        
+        menuMusic.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
+        gameMusic.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
+        
+        Text volumePercent = new Text("50%");
+        volumePercent.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 25));
+        volumePercent.setFill(Color.WHITE);
+        volumePercent.setEffect(dropShadow);
+        volumePercent.setX(600);
+        volumePercent.setY(175);
+        
+        volumeSlider.valueProperty().addListener(new ChangeListener<Number>(){
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                volumePercent.setText(Math.round(newValue.doubleValue()*100) + "%");
+            }
+        });
+       
+        Text volumeSoundsText = new Text("Sounds volume");
+        volumeSoundsText.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        volumeSoundsText.setFill(Color.WHITE);
+        volumeSoundsText.setEffect(dropShadow);
+        volumeSoundsText.setX(530);
+        volumeSoundsText.setY(250);
+        
+        Slider volumeSoundsSlider = new Slider(0, 1, 0);
+        volumeSoundsSlider.setEffect(dropShadow);
+        volumeSoundsSlider.setTranslateX(550);
+        volumeSoundsSlider.setTranslateY(275);
+        volumeSoundsSlider.setValue(0.5);
+        
+        punchSound.volumeProperty().bindBidirectional(volumeSoundsSlider.valueProperty());
+        kickSound.volumeProperty().bindBidirectional(volumeSoundsSlider.valueProperty());
+        
+        Text volumeSoundsPercent = new Text("50%");
+        volumeSoundsPercent.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 25));
+        volumeSoundsPercent.setFill(Color.WHITE);
+        volumeSoundsPercent.setEffect(dropShadow);
+        volumeSoundsPercent.setX(600);
+        volumeSoundsPercent.setY(325);
+        
+        volumeSoundsSlider.valueProperty().addListener(new ChangeListener<Number>(){
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                volumeSoundsPercent.setText(Math.round(newValue.doubleValue()*100) + "%");
+            }
+        });
+        
+        Text MultiControls = new Text("Multiplayer controls");
+        MultiControls.setFill(Color.WHITE);
+        MultiControls.setEffect(dropShadow);
+        MultiControls.setFont(wallpoet);
+        Button buttonMultiControls = new Button();
+        buttonMultiControls.setBackground(new Background(buttonBackground));
+        buttonMultiControls.setGraphic(MultiControls);
+        buttonMultiControls.setMinHeight(50);
+        buttonMultiControls.setMinWidth(150);
+        buttonMultiControls.setTranslateX(background.getWidth() - 350);
+        buttonMultiControls.setTranslateY(350);
+        
+        CheckBox muteMusic = new CheckBox();
+        muteMusic.setSelected(false);
+        muteMusic.setTranslateX(500);
+        muteMusic.setTranslateY(125);
+        
+        
+        muteMusic.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event) {
+                if(muteMusic.isSelected()){
+                    menuMusic.setVolume(0);
+                    gameMusic.setVolume(0);
+                }else if(!(muteMusic.isSelected())){
+                    menuMusic.setVolume(0.5);
+                    gameMusic.setVolume(0.5);
+                }
+            }
+            
+        });
+        
+        CheckBox muteSounds = new CheckBox();
+        muteSounds.setSelected(false);
+        muteSounds.setTranslateX(500);
+        muteSounds.setTranslateY(275);
+        
+        
+        muteSounds.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event) {
+                if(muteSounds.isSelected()){
+                    punchSound.setVolume(0);
+                    kickSound.setVolume(0);
+                }else if(!(muteSounds.isSelected())){
+                    punchSound.setVolume(0.5);
+                    kickSound.setVolume(0.5);
+                }
+            }
+            
+        });
+        
+        AnchorPane settingsPane = new AnchorPane();
+        settingsPane.setBackground(menuBG);
+        
+        settingsPane.getChildren().add(muteSounds);
+        settingsPane.getChildren().add(muteMusic);
+        settingsPane.getChildren().add(buttonMultiControls);
+        settingsPane.getChildren().add(volumePercent);
+        settingsPane.getChildren().add(volumeText);
+        settingsPane.getChildren().add(volumeSlider);
+        settingsPane.getChildren().add(volumeSoundsPercent);
+        settingsPane.getChildren().add(volumeSoundsText);
+        settingsPane.getChildren().add(volumeSoundsSlider);
+        settingsPane.getChildren().add(leftArrow);
+        settingsPane.getChildren().add(moveLeft);
+        settingsPane.getChildren().add(rightArrow);
+        settingsPane.getChildren().add(moveRight);
+        settingsPane.getChildren().add(upArrow);
+        settingsPane.getChildren().add(jump);
+        settingsPane.getChildren().add(downArrow);
+        settingsPane.getChildren().add(crouch);
+        settingsPane.getChildren().add(A);
+        settingsPane.getChildren().add(punch);
+        settingsPane.getChildren().add(Z);
+        settingsPane.getChildren().add(kick);
+        
+        Scene settingsScene = new Scene(settingsPane, 800, 450);
+        
+        // =====================================================================
+        // Commandes du multijoueur
+        // =====================================================================
+        
+        Text playerOne = new Text("Player 1");
+        playerOne.setFont(wallpoetBigger);
+        playerOne.setFill(Color.WHITE);
+        playerOne.setEffect(dropShadow);
+        playerOne.setX(165);
+        playerOne.setY(30);
+        
+        Text leftArrowp1 = new Text("Q");
+        leftArrowp1.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        leftArrowp1.setFill(Color.WHITE);
+        leftArrowp1.setEffect(dropShadow);
+        leftArrowp1.setX(150);
+        leftArrowp1.setY(90);
+        
+        Text moveLeftp1 = new Text("move left");
+        moveLeftp1.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        moveLeftp1.setFill(Color.WHITE);
+        moveLeftp1.setEffect(dropShadow);
+        moveLeftp1.setX(275);
+        moveLeftp1.setY(90);
+        
+        Text rightArrowp1 = new Text("D");
+        rightArrowp1.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        rightArrowp1.setFill(Color.WHITE);
+        rightArrowp1.setEffect(dropShadow);
+        rightArrowp1.setX(150);
+        rightArrowp1.setY(150);
+        
+        Text moveRightp1 = new Text("move left");
+        moveRightp1.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        moveRightp1.setFill(Color.WHITE);
+        moveRightp1.setEffect(dropShadow);
+        moveRightp1.setX(275);
+        moveRightp1.setY(150);
+        
+        Text upArrowp1 = new Text("SPACE");
+        upArrowp1.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        upArrowp1.setFill(Color.WHITE);
+        upArrowp1.setEffect(dropShadow);
+        upArrowp1.setX(150);
+        upArrowp1.setY(210);
+        
+        Text jumpp1 = new Text("jump");
+        jumpp1.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        jumpp1.setFill(Color.WHITE);
+        jumpp1.setEffect(dropShadow);
+        jumpp1.setX(275);
+        jumpp1.setY(210);
+        
+        Text downArrowp1 = new Text("MAJ");
+        downArrowp1.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        downArrowp1.setFill(Color.WHITE);
+        downArrowp1.setEffect(dropShadow);
+        downArrowp1.setX(150);
+        downArrowp1.setY(270);
+        
+        Text crouchp1 = new Text("crouch");
+        crouchp1.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        crouchp1.setFill(Color.WHITE);
+        crouchp1.setEffect(dropShadow);
+        crouchp1.setX(275);
+        crouchp1.setY(270);
+        
+        Text punchTextp1 = new Text("Z");
+        punchTextp1.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        punchTextp1.setFill(Color.WHITE);
+        punchTextp1.setEffect(dropShadow);
+        punchTextp1.setX(150);
+        punchTextp1.setY(330);
+        
+        Text punchp1 = new Text ("punch");
+        punchp1.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        punchp1.setFill(Color.WHITE);
+        punchp1.setEffect(dropShadow);
+        punchp1.setX(275);
+        punchp1.setY(330);
+
+        Text kickTextp1 = new Text("S");
+        kickTextp1.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        kickTextp1.setFill(Color.WHITE);
+        kickTextp1.setEffect(dropShadow);
+        kickTextp1.setX(150);
+        kickTextp1.setY(390);
+        
+        Text kickp1 = new Text ("kick");
+        kickp1.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        kickp1.setFill(Color.WHITE);
+        kickp1.setEffect(dropShadow);
+        kickp1.setX(275);
+        kickp1.setY(390);
+        
+        Text playerTwo = new Text("Player 2");
+        playerTwo.setFont(wallpoetBigger);
+        playerTwo.setFill(Color.WHITE);
+        playerTwo.setEffect(dropShadow);
+        playerTwo.setX(515);
+        playerTwo.setY(30);
+        
+        Text leftArrowp2 = new Text("←");
+        leftArrowp2.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        leftArrowp2.setFill(Color.WHITE);
+        leftArrowp2.setEffect(dropShadow);
+        leftArrowp2.setX(500);
+        leftArrowp2.setY(90);
+        
+        Text moveLeftp2 = new Text("move left");
+        moveLeftp2.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        moveLeftp2.setFill(Color.WHITE);
+        moveLeftp2.setEffect(dropShadow);
+        moveLeftp2.setX(550);
+        moveLeftp2.setY(90);
+        
+        Text rightArrowp2 = new Text("→");
+        rightArrowp2.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        rightArrowp2.setFill(Color.WHITE);
+        rightArrowp2.setEffect(dropShadow);
+        rightArrowp2.setX(500);
+        rightArrowp2.setY(150);
+        
+        Text moveRightp2 = new Text("move left");
+        moveRightp2.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        moveRightp2.setFill(Color.WHITE);
+        moveRightp2.setEffect(dropShadow);
+        moveRightp2.setX(550);
+        moveRightp2.setY(150);
+        
+        Text upArrowp2 = new Text("↑");
+        upArrowp2.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        upArrowp2.setFill(Color.WHITE);
+        upArrowp2.setEffect(dropShadow);
+        upArrowp2.setX(500);
+        upArrowp2.setY(210);
+        
+        Text jumpp2 = new Text("jump");
+        jumpp2.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        jumpp2.setFill(Color.WHITE);
+        jumpp2.setEffect(dropShadow);
+        jumpp2.setX(550);
+        jumpp2.setY(210);
+        
+        Text downArrowp2 = new Text("↓");
+        downArrowp2.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        downArrowp2.setFill(Color.WHITE);
+        downArrowp2.setEffect(dropShadow);
+        downArrowp2.setX(500);
+        downArrowp2.setY(270);
+        
+        Text crouchp2 = new Text("crouch");
+        crouchp2.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        crouchp2.setFill(Color.WHITE);
+        crouchp2.setEffect(dropShadow);
+        crouchp2.setX(550);
+        crouchp2.setY(270);
+        
+        Text punchTextp2 = new Text("1");
+        punchTextp2.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        punchTextp2.setFill(Color.WHITE);
+        punchTextp2.setEffect(dropShadow);
+        punchTextp2.setX(500);
+        punchTextp2.setY(330);
+        
+        Text punchp2 = new Text ("punch");
+        punchp2.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        punchp2.setFill(Color.WHITE);
+        punchp2.setEffect(dropShadow);
+        punchp2.setX(550);
+        punchp2.setY(330);
+
+        Text kickTextp2 = new Text("2");
+        kickTextp2.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        kickTextp2.setFill(Color.WHITE);
+        kickTextp2.setEffect(dropShadow);
+        kickTextp2.setX(500);
+        kickTextp2.setY(390);
+        
+        Text kickp2 = new Text ("kick");
+        kickp2.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        kickp2.setFill(Color.WHITE);
+        kickp2.setEffect(dropShadow);
+        kickp2.setX(550);
+        kickp2.setY(390);
+        
+        AnchorPane multiControlsPane = new AnchorPane();
+        multiControlsPane.setBackground(menuBG);
+        
+        multiControlsPane.getChildren().add(playerOne);
+        multiControlsPane.getChildren().add(playerTwo);
+        multiControlsPane.getChildren().add(leftArrowp1);
+        multiControlsPane.getChildren().add(moveLeftp1);
+        multiControlsPane.getChildren().add(rightArrowp1);
+        multiControlsPane.getChildren().add(moveRightp1);
+        multiControlsPane.getChildren().add(upArrowp1);
+        multiControlsPane.getChildren().add(jumpp1);
+        multiControlsPane.getChildren().add(downArrowp1);
+        multiControlsPane.getChildren().add(crouchp1);
+        multiControlsPane.getChildren().add(punchTextp1);
+        multiControlsPane.getChildren().add(punchp1);
+        multiControlsPane.getChildren().add(kickTextp1);
+        multiControlsPane.getChildren().add(kickp1);
+        multiControlsPane.getChildren().add(leftArrowp2);
+        multiControlsPane.getChildren().add(moveLeftp2);
+        multiControlsPane.getChildren().add(rightArrowp2);
+        multiControlsPane.getChildren().add(moveRightp2);
+        multiControlsPane.getChildren().add(upArrowp2);
+        multiControlsPane.getChildren().add(jumpp2);
+        multiControlsPane.getChildren().add(downArrowp2);
+        multiControlsPane.getChildren().add(crouchp2);
+        multiControlsPane.getChildren().add(punchTextp2);
+        multiControlsPane.getChildren().add(punchp2);
+        multiControlsPane.getChildren().add(kickTextp2);
+        multiControlsPane.getChildren().add(kickp2);
+        
+        Scene multiControlsScene = new Scene(multiControlsPane, 800, 450);
         
         // =====================================================================
         // Selection mode de jeu
@@ -1269,6 +1711,15 @@ public class RF_V3 extends Application {
             
         });
         
+        multiControlsScene.setOnKeyPressed(new EventHandler<KeyEvent>(){
+            @Override
+            public void handle(KeyEvent event) {
+                if(event.getCode().equals(KeyCode.ESCAPE)){
+                    primaryStage.setScene(settingsScene);
+                }
+            }
+            
+        });
         
         // =====================================================================
         // bouton
@@ -1375,6 +1826,7 @@ public class RF_V3 extends Application {
             multiPane.setBackground(BG3);
             tMapValue.setText("map 3");
         });
+        
         
         validateButton.setOnAction((ActionEvent event) -> {
             if(pseudoEntry.getText().length() >0){
