@@ -2337,7 +2337,7 @@ public class RF_V3 extends Application {
                                     punchSound.play();
                                     p3.hit(p2.getDamage());
                                 }
-                            } else if(p2.getSkin().getImage()== iPlayerL){
+                            } else if(p2.getSkin().getImage()== iSailorL){
                                 iVPlayer2.setImage(iSailorPunchL);
                                 p2.setSpeed(0);
                                 if(p3.isAlive() && p3.hitRight(p2.getSkin().getX())){
