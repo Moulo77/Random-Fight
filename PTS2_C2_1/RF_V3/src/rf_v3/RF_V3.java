@@ -1746,6 +1746,7 @@ public class RF_V3 extends Application {
         playArcade.setOnAction((ActionEvent event) ->{
             gamePlay=1;
             validateButton.setDisable(false);
+            pseudoEntry.setVisible(false);
             primaryStage.setScene(arcadeScene);
             menuMusic.stop();
             gameMusic.play();
