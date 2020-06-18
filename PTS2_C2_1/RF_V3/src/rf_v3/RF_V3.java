@@ -175,7 +175,55 @@ public class RF_V3 extends Application {
         iVPlayer.setPreserveRatio(true);
         iVPlayer.setFitWidth(110);
         
-        ImageView iVPlayer2 = new ImageView(iPlayer);
+        file = new FileInputStream("src/RF_V3/images/sailorMouvement.png");
+        Image iSailor = new Image(file,140,170,false,false);
+        
+        file = new FileInputStream("src/RF_V3/images/sailorMouvementG.png");
+        Image iSailorL = new Image(file,140,170,false,false);
+        
+        file = new FileInputStream("src/RF_V3/images/sailorCoupPoing.png");
+        Image iSailorPunch = new Image(file,140,170,false,false);
+        
+        file = new FileInputStream("src/RF_V3/images/sailorCoupPoingG.png");
+        Image iSailorPunchL = new Image(file,140,170,false,false);
+        
+        file = new FileInputStream("src/RF_V3/images/sailorCoupPied.png");
+        Image iSailorKick = new Image(file,140,170,false,false);
+        
+        file = new FileInputStream("src/RF_V3/images/sailorCoupPiedG.png");
+        Image iSailorKickL = new Image(file,140,170,false,false);
+        
+        file = new FileInputStream("src/RF_V3/images/sailorAcroupie.png");
+        Image iSailorCrouch = new Image(file,140,170,false,false);
+        
+        file = new FileInputStream("src/RF_V3/images/sailorAcroupieG.png");
+        Image iSailorCrouchL = new Image(file,140,170,false,false);
+        
+        file = new FileInputStream("src/RF_V3/images/sailorSaut.png");
+        Image iSailorJump = new Image(file,140,170,false,false);
+        
+        file = new FileInputStream("src/RF_V3/images/sailorSautG.png");
+        Image iSailorJumpL = new Image(file,140,170,false,false);
+        
+        file = new FileInputStream("src/RF_V3/images/sailorSaut2.png");
+        Image iSailorJump2 = new Image(file,140,170,false,false);
+        
+        file = new FileInputStream("src/RF_V3/images/sailorSaut2G.png");
+        Image iSailorJump2L = new Image(file,140,170,false,false);
+        
+        file = new FileInputStream("src/RF_V3/images/sailorAcroupiePied.png");
+        Image iSailorCrouchKick = new Image(file,140,170,false,false);
+        
+        file = new FileInputStream("src/RF_V3/images/sailorAcroupiePiedG.png");
+        Image iSailorCrouchKickL = new Image(file,140,170,false,false);
+        
+        file = new FileInputStream("src/RF_V3/images/sailorAcroupiePoing.png");
+        Image iSailorCrouchPunch = new Image(file,140,170,false,false);
+        
+        file = new FileInputStream("src/RF_V3/images/sailorAcroupiePoingG.png");
+        Image iSailorCrouchPunchL = new Image(file,140,170,false,false);
+        
+        ImageView iVPlayer2 = new ImageView(iSailor);
         iVPlayer2.setPreserveRatio(true);
         iVPlayer2.setFitWidth(110);
         
@@ -1028,6 +1076,30 @@ public class RF_V3 extends Application {
         menu.setTranslateX(335);
         menu.setTranslateY(300);
         
+        Text replayTextMulti = new Text("Replay");
+        replayTextMulti.setFill(Color.WHITE);
+        replayTextMulti.setEffect(dropShadow);
+        replayTextMulti.setFont(wallpoet);
+        Button replayMulti = new Button();
+        replayMulti.setBackground(new Background(buttonBackground));
+        replayMulti.setGraphic(replayTextMulti);
+        replayMulti.setMinHeight(50);
+        replayMulti.setMinWidth(120);
+        replayMulti.setTranslateX(335);
+        replayMulti.setTranslateY(225);
+        
+        Text menuTextMulti = new Text("Menu");
+        menuTextMulti.setFill(Color.WHITE);
+        menuTextMulti.setEffect(dropShadow);
+        menuTextMulti.setFont(wallpoet);
+        Button menuMulti = new Button();
+        menuMulti.setBackground(new Background(buttonBackground));
+        menuMulti.setGraphic(menuTextMulti);
+        menuMulti.setMinHeight(50);
+        menuMulti.setMinWidth(120);
+        menuMulti.setTranslateX(335);
+        menuMulti.setTranslateY(300);
+        
         Text finalScore = new Text();
         finalScore.setFont(wallpoetBigger);
         finalScore.setFill(Color.WHITE);
@@ -1071,8 +1143,8 @@ public class RF_V3 extends Application {
         arcadePane.getChildren().add(replay);
         arcadePane.getChildren().add(menu);
         arcadePane.getChildren().add(finalScore);
-        multiPane.getChildren().add(menu);
-        multiPane.getChildren().add(replay);
+        multiPane.getChildren().add(menuMulti);
+        multiPane.getChildren().add(replayMulti);
         multiPane.getChildren().add(tWinner);
         tWinner.setVisible(false);
         replay.setVisible(false);
@@ -1244,6 +1316,14 @@ public class RF_V3 extends Application {
             menu.setVisible(false);
             score.setScore(0);
             
+            primaryStage.setScene(menuScene);
+        });
+        
+        menuMulti.setOnAction((ActionEvent event) ->{
+            gameMusic.stop();
+            replayMulti.setVisible(false);
+            menuMulti.setVisible(false);
+            tWinner.setVisible(false);
             primaryStage.setScene(menuScene);
         });
         
@@ -1492,7 +1572,7 @@ public class RF_V3 extends Application {
         });
         
         replay.setOnAction((ActionEvent event) ->{
-            if(gamePlay==0){
+            if(gamePlay==1){
             validateButton.setDisable(false);
             menuMusic.stop();
             gameMusic.play();
@@ -1536,14 +1616,19 @@ public class RF_V3 extends Application {
             gameTimer = new Timer();
             gameTimer.schedule(timerTask, 1000,1000);
             
-            } else if(gamePlay==2){
+            }
+        });
+        
+        replayMulti.setOnAction((ActionEvent event) ->{
+            if(gamePlay==2){
                 menuMusic.stop();
                 gameMusic.play();
-                menu.setVisible(false);
-                replay.setVisible(false);
+                time=timeTemp;
+                menuMulti.setVisible(false);
+                replayMulti.setVisible(false);
                 tWinner.setVisible(false);
                 p2.setX(50);
-                iVPlayer2.setImage(iPlayer);
+                iVPlayer2.setImage(iSailor);
                 iVPlayer2.setVisible(true);
                 p3.setX(550);
                 p2.setLife(life);
@@ -1562,8 +1647,8 @@ public class RF_V3 extends Application {
                             gameTimer.cancel();
                             time=120;
                             timeTextMulti.setText("Time : 0");
-                            replay.setVisible(true);
-                            menu.setVisible(true);
+                            replayMulti.setVisible(true);
+                            menuMulti.setVisible(true);
                             tWinner.setVisible(true);
                             if(p2.getLife()>p3.getLife()){
                             tWinner.setText("joueur 1 gagne!");
@@ -1586,14 +1671,18 @@ public class RF_V3 extends Application {
         
         playMulti.setOnAction((ActionEvent event) ->{
             gamePlay=2;
+            timeTemp =time;
             primaryStage.setScene(multiScene);
             menuMusic.stop();
             gameMusic.play();
+            replayMulti.setVisible(false);
+            menuMulti.setVisible(false);
+            tWinner.setVisible(false);
             p2.setX(50);
             p3.setX(550);
             p2.setLife(life);
             p3.setLife(life);
-            iVPlayer2.setImage(iPlayer);
+            iVPlayer2.setImage(iSailor);
             iVPlayer3.setImage(iBenderL);
             TimerTask timerTask = new TimerTask() {
             @Override
@@ -1607,8 +1696,8 @@ public class RF_V3 extends Application {
                         gameTimer.cancel();
                         time=120;
                         timeTextMulti.setText("Time : 0");
-                        replay.setVisible(true);
-                        menu.setVisible(true);
+                        replayMulti.setVisible(true);
+                        menuMulti.setVisible(true);
                         tWinner.setVisible(true);
                         pseudoEntry.setVisible(true);
                         p2.getSkin().setVisible(false);
@@ -1733,10 +1822,10 @@ public class RF_V3 extends Application {
                         tP2Life.setText("P1 : " + String.valueOf(p2.getLife()) + "pv");
                         tP3Life.setText("P2 : " + String.valueOf(p3.getLife()) + "pv");
                         if(p2.getY()>=250){
-                            if(p2.getSkin().getImage()==iPlayerJump){
-                                iVPlayer2.setImage(iPlayer);
-                            } else if(p2.getSkin().getImage()==iPlayerJumpL){
-                                iVPlayer2.setImage(iPlayerL);
+                            if(p2.getSkin().getImage()==iSailorJump){
+                                iVPlayer2.setImage(iSailor);
+                            } else if(p2.getSkin().getImage()==iSailorJumpL){
+                                iVPlayer2.setImage(iSailor);
                             }
                         }
                         if(p3.getY()>=250){
@@ -1953,29 +2042,29 @@ public class RF_V3 extends Application {
             public void handle(KeyEvent ke){
                 KeyCode keyCode = ke.getCode();
                 switch(keyCode){
-                    case Z: if(p2.getSkin().getImage()== iPlayer){
-                                iVPlayer2.setImage(iPlayerPunch);
+                    case Z: if(p2.getSkin().getImage()== iSailor){
+                                iVPlayer2.setImage(iSailorPunch);
                                 p2.setSpeed(0);
                                 if(p3.isAlive() && p3.hitLeft(p2.getSkin().getX())){
                                     punchSound.play();
                                     p3.hit(p2.getDamage());
                                 }
                             } else if(p2.getSkin().getImage()== iPlayerL){
-                                iVPlayer2.setImage(iPlayerPunchL);
+                                iVPlayer2.setImage(iSailorPunchL);
                                 p2.setSpeed(0);
                                 if(p3.isAlive() && p3.hitRight(p2.getSkin().getX())){
                                     punchSound.play();
                                     p3.hit(p2.getDamage());
                                 }
-                            } else if(p2.getSkin().getImage()==iPlayerCrouch){
-                                iVPlayer2.setImage(iPlayerCrouchPunch);
+                            } else if(p2.getSkin().getImage()==iSailorCrouch){
+                                iVPlayer2.setImage(iSailorCrouchPunch);
                                 p2.setSpeed(0);
                                 if(p3.isAlive() && p3.hitLeft(p2.getSkin().getX())){
                                     punchSound.play();
                                     p3.hit(p2.getDamage());
                                 }
-                            } else if(p2.getSkin().getImage()==iPlayerCrouchL){
-                                iVPlayer2.setImage(iPlayerCrouchPunchL);
+                            } else if(p2.getSkin().getImage()==iSailorCrouchL){
+                                iVPlayer2.setImage(iSailorCrouchPunchL);
                                 p2.setSpeed(0);
                                 if(p3.isAlive() && p3.hitRight(p2.getSkin().getX())){
                                     punchSound.play();
@@ -1984,29 +2073,29 @@ public class RF_V3 extends Application {
                             }
                             
                         break;
-                    case S: if(p2.getSkin().getImage()== iPlayer){
-                                iVPlayer2.setImage(iPlayerKick);
+                    case S: if(p2.getSkin().getImage()== iSailor){
+                                iVPlayer2.setImage(iSailorKick);
                                 p2.setSpeed(0);
                                  if(p3.isAlive() && p3.hitLeft(p2.getSkin().getX())){
                                     kickSound.play();
                                     p3.hit(p2.getDamage());
                                 }
-                            } else if(p2.getSkin().getImage()== iPlayerL){
-                                iVPlayer2.setImage(iPlayerKickL);
+                            } else if(p2.getSkin().getImage()== iSailorL){
+                                iVPlayer2.setImage(iSailorKickL);
                                 p2.setSpeed(0);
                                 if(p3.isAlive() && p3.hitRight(p2.getSkin().getX())){
                                     kickSound.play();
                                     p3.hit(p2.getDamage());
                                 }
-                            } else if(p2.getSkin().getImage()== iPlayerCrouch){
-                                iVPlayer2.setImage(iPlayerCrouchKick);
+                            } else if(p2.getSkin().getImage()== iSailorCrouch){
+                                iVPlayer2.setImage(iSailorCrouchKick);
                                 p2.setSpeed(0);
                                 if(p3.isAlive() && p3.hitLeft(p2.getSkin().getX())){
                                     kickSound.play();
                                     p3.hit(p2.getDamage());
                                 }
-                            } else if(p2.getSkin().getImage()== iPlayerCrouchL){
-                                iVPlayer2.setImage(iPlayerCrouchKickL);
+                            } else if(p2.getSkin().getImage()== iSailorCrouchL){
+                                iVPlayer2.setImage(iSailorCrouchKickL);
                                 p2.setSpeed(0);
                                 if(p3.isAlive() && p3.hitRight(p2.getSkin().getX())){
                                     kickSound.play();
@@ -2014,57 +2103,57 @@ public class RF_V3 extends Application {
                                 }
                             }
                             break;
-                    case Q: if(p2.getSkin().getImage()!=iPlayerPunch && p2.getSkin().getImage()!= iPlayerPunchL
-                                    && p2.getSkin().getImage() != iPlayerKick && p2.getSkin().getImage() != iPlayerKickL 
-                                    && p2.getSkin().getImage() != iPlayerCrouch && p2.getSkin().getImage()!= iPlayerCrouchL
-                                    && p2.getSkin().getImage() != iPlayerJump && p2.getSkin().getImage() != iPlayerJumpL
-                                    && p2.getSkin().getImage() != iPlayerCrouchPunch && p2.getSkin().getImage()!=iPlayerCrouchPunchL
-                                    && p2.getSkin().getImage() !=iPlayerCrouchKick && p2.getSkin().getImage() !=iPlayerCrouchKickL){
-                                        iVPlayer2.setImage(iPlayerL);
+                    case Q: if(p2.getSkin().getImage()!=iSailorPunch && p2.getSkin().getImage()!= iSailorPunchL
+                                    && p2.getSkin().getImage() != iSailorKick && p2.getSkin().getImage() != iSailorKickL 
+                                    && p2.getSkin().getImage() != iSailorCrouch && p2.getSkin().getImage()!= iSailorCrouchL
+                                    && p2.getSkin().getImage() != iSailorJump && p2.getSkin().getImage() != iSailorJumpL
+                                    && p2.getSkin().getImage() != iSailorCrouchPunch && p2.getSkin().getImage()!=iSailorCrouchPunchL
+                                    && p2.getSkin().getImage() !=iSailorCrouchKick && p2.getSkin().getImage() !=iSailorCrouchKickL){
+                                        iVPlayer2.setImage(iSailorL);
                                         p2.setSpeed(-1);
                                         vitesse=-1;
-                                } else if(p2.getSkin().getImage() == iPlayerCrouch || p2.getSkin().getImage()==iPlayerCrouchL){
+                                } else if(p2.getSkin().getImage() == iSailorCrouch || p2.getSkin().getImage()==iSailorCrouchL){
                                         p2.setSpeed(-1);
                                         vitesse=-1;
-                                } else if(p2.getSkin().getImage()== iPlayerJump || p2.getSkin().getImage()==iPlayerJumpL){
+                                } else if(p2.getSkin().getImage()== iSailorJump || p2.getSkin().getImage()==iSailorJumpL){
                                         p2.setSpeed(-1);
                                         vitesse=-1;
-                                        iVPlayer2.setImage(iPlayerJumpL);
+                                        iVPlayer2.setImage(iSailorJumpL);
                                 }
                         break;
-                    case D: if(p2.getSkin().getImage()!=iPlayerPunch && p2.getSkin().getImage()!= iPlayerPunchL
-                                    && p2.getSkin().getImage() != iPlayerKick && p2.getSkin().getImage() != iPlayerKickL 
-                                    && p2.getSkin().getImage() != iPlayerCrouch && p2.getSkin().getImage()!= iPlayerCrouchL
-                                    && p2.getSkin().getImage() != iPlayerJump && p2.getSkin().getImage() != iPlayerJumpL
-                                    && p2.getSkin().getImage() != iPlayerCrouchPunch && p2.getSkin().getImage()!=iPlayerCrouchPunchL
-                                    && p2.getSkin().getImage() !=iPlayerCrouchKick && p2.getSkin().getImage() !=iPlayerCrouchKickL){
-                                        iVPlayer2.setImage(iPlayer);
+                    case D: if(p2.getSkin().getImage()!=iSailorPunch && p2.getSkin().getImage()!= iSailorPunchL
+                                    && p2.getSkin().getImage() != iSailorKick && p2.getSkin().getImage() != iSailorKickL 
+                                    && p2.getSkin().getImage() != iSailorCrouch && p2.getSkin().getImage()!= iSailorCrouchL
+                                    && p2.getSkin().getImage() != iSailorJump && p2.getSkin().getImage() != iSailorJumpL
+                                    && p2.getSkin().getImage() != iSailorCrouchPunch && p2.getSkin().getImage()!=iSailorCrouchPunchL
+                                    && p2.getSkin().getImage() !=iSailorCrouchKick && p2.getSkin().getImage() !=iSailorCrouchKickL){
+                                        iVPlayer2.setImage(iSailor);
                                         p2.setSpeed(1);
                                         vitesse=1;
-                                } else if(p2.getSkin().getImage() == iPlayerCrouch || p2.getSkin().getImage()==iPlayerCrouchL){
+                                } else if(p2.getSkin().getImage() == iSailorCrouch || p2.getSkin().getImage()==iSailorCrouchL){
                                         p2.setSpeed(1);
                                         vitesse=1;
-                                } else if(p2.getSkin().getImage()== iPlayerJump || p2.getSkin().getImage()==iPlayerJumpL){
+                                } else if(p2.getSkin().getImage()== iSailorJump || p2.getSkin().getImage()==iSailorJumpL){
                                 p2.setSpeed(1);
                                 vitesse=1;
-                                iVPlayer2.setImage(iPlayerJump);
+                                iVPlayer2.setImage(iSailorJump);
                             }
                         break;
-                    case SHIFT: if(p2.getSkin().getImage()!=iPlayerPunch && p2.getSkin().getImage()!= iPlayerPunchL
-                            && p2.getSkin().getImage() != iPlayerKick && p2.getSkin().getImage() != iPlayerKickL){
-                            if(p2.getSkin().getImage()==iPlayer){
-                                iVPlayer2.setImage(iPlayerCrouch);
-                            } else if(p2.getSkin().getImage()==iPlayerL){
-                                iVPlayer2.setImage(iPlayerCrouchL);
+                    case SHIFT: if(p2.getSkin().getImage()!=iSailorPunch && p2.getSkin().getImage()!= iSailorPunchL
+                            && p2.getSkin().getImage() != iSailorKick && p2.getSkin().getImage() != iSailorKickL){
+                            if(p2.getSkin().getImage()==iSailor){
+                                iVPlayer2.setImage(iSailorCrouch);
+                            } else if(p2.getSkin().getImage()==iSailorL){
+                                iVPlayer2.setImage(iSailorCrouchL);
                             }
                         }
                     break;
-                    case SPACE: if(p2.getSkin().getImage()!=iPlayerPunch && p2.getSkin().getImage()!= iPlayerPunchL
-                            && p2.getSkin().getImage() != iPlayerKick && p2.getSkin().getImage() != iPlayerKickL){
-                            if(p2.getSkin().getImage()==iPlayer){
-                                iVPlayer2.setImage(iPlayerJump2);
-                            } else if(p2.getSkin().getImage()==iPlayerL){
-                                iVPlayer2.setImage(iPlayerJump2L);
+                    case SPACE: if(p2.getSkin().getImage()!=iSailorPunch && p2.getSkin().getImage()!= iSailorPunchL
+                            && p2.getSkin().getImage() != iSailorKick && p2.getSkin().getImage() != iSailorKickL){
+                            if(p2.getSkin().getImage()==iSailor){
+                                iVPlayer2.setImage(iSailorJump2);
+                            } else if(p2.getSkin().getImage()==iSailorL){
+                                iVPlayer2.setImage(iSailorJump2L);
                             }
                         }
                     break;
@@ -2200,28 +2289,28 @@ public class RF_V3 extends Application {
         multiScene.setOnKeyReleased(ke -> {
             KeyCode keyCode = ke.getCode();
             if(keyCode.equals(KeyCode.Z)){
-                if(p2.getSkin().getImage()==iPlayerPunch){
-                    iVPlayer2.setImage(iPlayer);
-                } else if(p2.getSkin().getImage()==iPlayerPunchL){
-                    iVPlayer2.setImage(iPlayerL);
-                } else if(p2.getSkin().getImage()==iPlayerCrouchPunch){
-                    iVPlayer2.setImage(iPlayerCrouch);
-                } else if(p2.getSkin().getImage()==iPlayerCrouchPunchL){
-                    iVPlayer2.setImage(iPlayerCrouchL);
+                if(p2.getSkin().getImage()==iSailorPunch){
+                    iVPlayer2.setImage(iSailor);
+                } else if(p2.getSkin().getImage()==iSailorPunchL){
+                    iVPlayer2.setImage(iSailorL);
+                } else if(p2.getSkin().getImage()==iSailorCrouchPunch){
+                    iVPlayer2.setImage(iSailorCrouch);
+                } else if(p2.getSkin().getImage()==iSailorCrouchPunchL){
+                    iVPlayer2.setImage(iSailorCrouchL);
                 }
                 p2.setSpeed(vitesse);
                 punchSound.setOnEndOfMedia(() ->{
                    punchSound.stop();
                 });
             }else if(keyCode.equals(KeyCode.S)){
-                if(p2.getSkin().getImage()==iPlayerKick){
-                    iVPlayer2.setImage(iPlayer);
-                } else if(p2.getSkin().getImage()==iPlayerKickL){
-                    iVPlayer2.setImage(iPlayerL);
-                } else if(p2.getSkin().getImage()==iPlayerCrouchKick){
-                    iVPlayer2.setImage(iPlayerCrouch);
-                } else if(p2.getSkin().getImage()==iPlayerCrouchKickL){
-                    iVPlayer2.setImage(iPlayerCrouchL);
+                if(p2.getSkin().getImage()==iSailorKick){
+                    iVPlayer2.setImage(iSailor);
+                } else if(p2.getSkin().getImage()==iSailorKickL){
+                    iVPlayer2.setImage(iSailorL);
+                } else if(p2.getSkin().getImage()==iSailorCrouchKick){
+                    iVPlayer2.setImage(iSailorCrouch);
+                } else if(p2.getSkin().getImage()==iSailorCrouchKickL){
+                    iVPlayer2.setImage(iSailorCrouchL);
                 }
                 p2.setSpeed(vitesse);
                 kickSound.setOnEndOfMedia(() ->{
@@ -2231,17 +2320,17 @@ public class RF_V3 extends Application {
                 p2.setSpeed(0);
                 vitesse=0;
             }else if(keyCode.equals(KeyCode.SHIFT)){
-                if(p2.getSkin().getImage()==iPlayerCrouch){
-                    iVPlayer2.setImage(iPlayer);
-                } else if(p2.getSkin().getImage()==iPlayerCrouchL){
-                    iVPlayer2.setImage(iPlayerL);
+                if(p2.getSkin().getImage()==iSailorCrouch){
+                    iVPlayer2.setImage(iSailor);
+                } else if(p2.getSkin().getImage()==iSailorCrouchL){
+                    iVPlayer2.setImage(iSailorL);
                 }
             } else if(keyCode.equals(KeyCode.SPACE)){
-                if(p2.getSkin().getImage()==iPlayerJump2){
-                    iVPlayer2.setImage(iPlayerJump);
+                if(p2.getSkin().getImage()==iSailorJump2){
+                    iVPlayer2.setImage(iSailorJump);
                     p2.setSpeedY(-1);
-                } else if(p2.getSkin().getImage()==iPlayerJump2L){
-                    iVPlayer2.setImage(iPlayerJumpL);
+                } else if(p2.getSkin().getImage()==iSailorJump2L){
+                    iVPlayer2.setImage(iSailorJumpL);
                     p2.setSpeedY(-1);
                 }
             } else if(keyCode.equals(KeyCode.NUMPAD0)){
