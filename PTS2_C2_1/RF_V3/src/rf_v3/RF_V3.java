@@ -30,7 +30,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
@@ -38,6 +38,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -47,7 +48,6 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
@@ -858,7 +858,7 @@ public class RF_V3 extends Application {
         crouchp2.setX(550);
         crouchp2.setY(270);
         
-        Text punchTextp2 = new Text("1");
+        Text punchTextp2 = new Text("0");
         punchTextp2.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
         punchTextp2.setFill(Color.WHITE);
         punchTextp2.setEffect(dropShadow);
@@ -1083,182 +1083,6 @@ public class RF_V3 extends Application {
         Scene scoreTable = new Scene(scorePane, 800, 450);
         
         
-        
-        // =====================================================================
-        // Menu paramètres
-        // =====================================================================
-        Text leftArrow = new Text("←");
-        leftArrow.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
-        leftArrow.setFill(Color.WHITE);
-        leftArrow.setEffect(dropShadow);
-        leftArrow.setX(150);
-        leftArrow.setY(90);
-        
-        Text moveLeft = new Text("move left");
-        moveLeft.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
-        moveLeft.setFill(Color.WHITE);
-        moveLeft.setEffect(dropShadow);
-        moveLeft.setX(200);
-        moveLeft.setY(90);
-        
-        Text rightArrow = new Text("→");
-        rightArrow.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
-        rightArrow.setFill(Color.WHITE);
-        rightArrow.setEffect(dropShadow);
-        rightArrow.setX(150);
-        rightArrow.setY(150);
-        
-        Text moveRight = new Text("move left");
-        moveRight.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
-        moveRight.setFill(Color.WHITE);
-        moveRight.setEffect(dropShadow);
-        moveRight.setX(200);
-        moveRight.setY(150);
-        
-        Text upArrow = new Text("↑");
-        upArrow.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
-        upArrow.setFill(Color.WHITE);
-        upArrow.setEffect(dropShadow);
-        upArrow.setX(150);
-        upArrow.setY(210);
-        
-        Text jump = new Text("jump");
-        jump.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
-        jump.setFill(Color.WHITE);
-        jump.setEffect(dropShadow);
-        jump.setX(200);
-        jump.setY(210);
-        
-        Text downArrow = new Text("↓");
-        downArrow.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
-        downArrow.setFill(Color.WHITE);
-        downArrow.setEffect(dropShadow);
-        downArrow.setX(150);
-        downArrow.setY(270);
-        
-        Text crouch = new Text("crouch");
-        crouch.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
-        crouch.setFill(Color.WHITE);
-        crouch.setEffect(dropShadow);
-        crouch.setX(200);
-        crouch.setY(270);
-        
-        Text A = new Text("A");
-        A.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
-        A.setFill(Color.WHITE);
-        A.setEffect(dropShadow);
-        A.setX(150);
-        A.setY(330);
-        
-        Text punch = new Text ("punch");
-        punch.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
-        punch.setFill(Color.WHITE);
-        punch.setEffect(dropShadow);
-        punch.setX(200);
-        punch.setY(330);
-
-        Text Z = new Text("Z");
-        Z.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
-        Z.setFill(Color.WHITE);
-        Z.setEffect(dropShadow);
-        Z.setX(150);
-        Z.setY(390);
-        
-        Text kick = new Text ("kick");
-        kick.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
-        kick.setFill(Color.WHITE);
-        kick.setEffect(dropShadow);
-        kick.setX(200);
-        kick.setY(390);
-        
-        Text volumeText = new Text("Volume");
-        volumeText.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
-        volumeText.setFill(Color.WHITE);
-        volumeText.setEffect(dropShadow);
-        volumeText.setX(565);
-        volumeText.setY(175);
-        
-        Slider volumeSlider = new Slider(0, 1, 0);
-        volumeSlider.setEffect(dropShadow);
-        volumeSlider.setTranslateX(550);
-        volumeSlider.setTranslateY(200);
-        volumeSlider.setValue(0.5);
-        
-        menuMusic.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
-        gameMusic.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
-        punchSound.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
-        kickSound.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
-        
-        Text volumePercent = new Text("50%");
-        volumePercent.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 25));
-        volumePercent.setFill(Color.WHITE);
-        volumePercent.setEffect(dropShadow);
-        volumePercent.setX(600);
-        volumePercent.setY(250);
-        
-        volumeSlider.valueProperty().addListener(new ChangeListener<Number>(){
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                volumePercent.setText(Math.round(newValue.doubleValue()*100) + "%");
-            }
-        });
-       
-        Text volumeSoundsText = new Text("Sounds volume");
-        volumeSoundsText.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 30));
-        volumeSoundsText.setFill(Color.WHITE);
-        volumeSoundsText.setEffect(dropShadow);
-        volumeSoundsText.setX(530);
-        volumeSoundsText.setY(250);
-        
-        Slider volumeSoundsSlider = new Slider(0, 1, 0);
-        volumeSoundsSlider.setEffect(dropShadow);
-        volumeSoundsSlider.setTranslateX(550);
-        volumeSoundsSlider.setTranslateY(275);
-        volumeSoundsSlider.setValue(0.5);
-        
-        punchSound.volumeProperty().bindBidirectional(volumeSoundsSlider.valueProperty());
-        kickSound.volumeProperty().bindBidirectional(volumeSoundsSlider.valueProperty());
-        
-        Text volumeSoundsPercent = new Text("50%");
-        volumeSoundsPercent.setFont(Font.font(STYLESHEET_MODENA, FontWeight.BOLD, FontPosture.REGULAR, 25));
-        volumeSoundsPercent.setFill(Color.WHITE);
-        volumeSoundsPercent.setEffect(dropShadow);
-        volumeSoundsPercent.setX(600);
-        volumeSoundsPercent.setY(325);
-        
-        volumeSoundsSlider.valueProperty().addListener(new ChangeListener<Number>(){
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                volumeSoundsPercent.setText(Math.round(newValue.doubleValue()*100) + "%");
-            }
-        });
-        
-        AnchorPane settingsPane = new AnchorPane();
-        settingsPane.setBackground(menuBG);
-        
-        settingsPane.getChildren().add(volumePercent);
-        settingsPane.getChildren().add(volumeText);
-        settingsPane.getChildren().add(volumeSlider);
-        settingsPane.getChildren().add(volumeSoundsPercent);
-        settingsPane.getChildren().add(volumeSoundsText);
-        settingsPane.getChildren().add(volumeSoundsSlider);
-        settingsPane.getChildren().add(leftArrow);
-        settingsPane.getChildren().add(moveLeft);
-        settingsPane.getChildren().add(rightArrow);
-        settingsPane.getChildren().add(moveRight);
-        settingsPane.getChildren().add(upArrow);
-        settingsPane.getChildren().add(jump);
-        settingsPane.getChildren().add(downArrow);
-        settingsPane.getChildren().add(crouch);
-        settingsPane.getChildren().add(A);
-        settingsPane.getChildren().add(punch);
-        settingsPane.getChildren().add(Z);
-        settingsPane.getChildren().add(kick);
-        
-        Scene settingsScene = new Scene(settingsPane, 800, 450);
-        
-        
-        
         // =====================================================================
         // Jeu arcade
         // =====================================================================
@@ -1478,6 +1302,13 @@ public class RF_V3 extends Application {
         timeTextMulti.setFill(Color.WHITE);
         timeTextMulti.setEffect(dropShadow);
         
+        FileInputStream scoreBar2 = new FileInputStream("src/RF_V3/images/LaBarre.png");
+        Image scoreBarImg2 = new Image(scoreBar2);
+        ImageView iVScoreBar2 = new ImageView(scoreBarImg2);
+        iVScoreBar2.setX(0);
+        iVScoreBar2.setY(-30);
+        
+        multiPane.getChildren().add(iVScoreBar2);
         multiPane.getChildren().add(tP2Life);
         multiPane.getChildren().add(tP3Life);
         multiPane.getChildren().add(iVPlayer2);
