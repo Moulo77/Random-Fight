@@ -1827,6 +1827,9 @@ public class RF_V3 extends Application {
             tMapValue.setText("map 3");
         });
         
+        buttonMultiControls.setOnAction((ActionEvent event) ->{
+            primaryStage.setScene(multiControlsScene);
+        });
         
         validateButton.setOnAction((ActionEvent event) -> {
             if(pseudoEntry.getText().length() >0){
