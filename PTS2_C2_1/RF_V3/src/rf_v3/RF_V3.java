@@ -1232,7 +1232,7 @@ public class RF_V3 extends Application {
         map2.setTranslateX(550);
         map2.setTranslateY(130);
         
-        Text tMap3 = new Text("map 2");
+        Text tMap3 = new Text("map 3");
         tMap3.setFill(Color.WHITE);
         tMap3.setEffect(dropShadow);
         tMap3.setFont(wallpoet);
@@ -1582,6 +1582,8 @@ public class RF_V3 extends Application {
         
         playMultiOptions.setOnAction((ActionEvent event) ->{
             oldScene=4;
+            time = 120;
+            tTimeValue.setText(String.valueOf(time));
             primaryStage.setScene(multiOptionsScene);
         });
         
@@ -1937,11 +1939,11 @@ public class RF_V3 extends Application {
                             menuMulti.setVisible(true);
                             tWinner.setVisible(true);
                             if(p2.getLife()>p3.getLife()){
-                            tWinner.setText("joueur 1 gagne!");
+                            tWinner.setText("player 1 win!");
                         } else if(p3.getLife()>p2.getLife()){
-                            tWinner.setText("joueur 2 gagne!");
+                            tWinner.setText("player 2 win!");
                         } else {
-                            tWinner.setText("égalité!");
+                            tWinner.setText("draw!");
                         }
                             p2.getSkin().setVisible(false);
                             p3.getSkin().setVisible(false);
@@ -1989,11 +1991,11 @@ public class RF_V3 extends Application {
                         p2.getSkin().setVisible(false);
                         p3.getSkin().setVisible(false);
                         if(p2.getLife()>p3.getLife()){
-                            tWinner.setText("joueur 1 gagne!");
+                            tWinner.setText("player 1 win!");
                         } else if(p3.getLife()>p2.getLife()){
-                            tWinner.setText("joueur 2 gagne!");
+                            tWinner.setText("player 2 win!");
                         } else {
-                            tWinner.setText("égalité!");
+                            tWinner.setText("draw!");
                         }
                     }
                 });
